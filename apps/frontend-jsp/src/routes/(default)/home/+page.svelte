@@ -1,19 +1,28 @@
 <script lang="ts">
-  import type { PageProps } from "./$types";
-
-  let { data }: PageProps = $props();
+  import FaqSection from "../../../components/landingpage/FaqSection.svelte";
+  import HeroSection from "../../../components/landingpage/HeroSection.svelte";
+  import ListArmadaSection from "../../../components/landingpage/ListArmadaSection.svelte";
+  import PaketBundleSection from "../../../components/landingpage/PaketBundleSection.svelte";
+  import TestimoniSection from "../../../components/landingpage/TestimoniSection.svelte";
 </script>
 
 <svelte:head>
   <title>Jeep Station Puncak</title>
 </svelte:head>
-
-<section>HERO SECTION</section>
-<div>
-  {data.name}
-  {data.email}
+<div class="bg-green-950">
+  <section>
+    <HeroSection />
+  </section>
+  <section class="px-20">
+    <PaketBundleSection />
+  </section>
+  <section class="px-20 py-10">
+    <ListArmadaSection />
+  </section>
+  <section class="px-20">
+    <TestimoniSection />
+  </section>
+  <section class="px-20 py-10">
+    <FaqSection />
+  </section>
 </div>
-<section>PAKET BUNDLE SECTION</section>
-<section>LIST ARMADA SECTION</section>
-<section>TESTIMONI</section>
-<section>FAQ</section>

@@ -12,7 +12,9 @@
 		"strict": true,
 		"moduleResolution": "bundler",
 		"paths": {
-			"@apps/backend-jsp": ["../backend-jsp/src/index.ts"]
+			"@apps/backend-jsp": ["../backend-jsp/src/index.ts"],
+			"$lib": ["./src/lib"],
+      		"$lib/*": ["./src/lib/*"]
 		}
 	}
 	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias

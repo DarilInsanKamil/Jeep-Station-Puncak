@@ -4,7 +4,7 @@
   import Navigation from "../../components/Navigation.svelte";
 </script>
 
-<nav>
+<nav class="relative w-full">
   <Navigation />
 </nav>
 <main>
