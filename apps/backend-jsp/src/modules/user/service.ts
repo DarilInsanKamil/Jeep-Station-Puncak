@@ -80,7 +80,7 @@ export abstract class UserService {
 
     static async getUserById(userId: string) {
         const userQuery = {
-            text: 'select "id", "email", "username" from users where "id" = $1',
+            text: 'select "id", "email", "username", "role" from users where "id" = $1',
             values: [userId]
         }
         const result = await pool.query(userQuery)

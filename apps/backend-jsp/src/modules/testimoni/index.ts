@@ -1,8 +1,16 @@
 import Elysia, { status } from "elysia";
 import { TestimoniService } from "./service";
 import { TestimoniModel } from "./model";
+import { TestimoniError } from "../../errors/testimoniError";
 
 export const testimoni = new Elysia({ prefix: '/testimoni' })
+    .error({ TESTIMONI_ERROR: TestimoniError })
+    .onError(({ code, error, set }) => {
+        if (code === 'TESTIMONI_ERROR') {
+            set.status = error.status;
+            return error.toResponse();
+        }
+    })
     .post(
         '/create',
         async ({ body }) => {
