@@ -1,7 +1,6 @@
 import { treaty } from "@elysiajs/eden";
 import type { app } from "..";
 import { describe, it, expect, beforeAll } from "bun:test";
-import { status } from "elysia";
 
 const api = treaty<app>('localhost:3000')
 

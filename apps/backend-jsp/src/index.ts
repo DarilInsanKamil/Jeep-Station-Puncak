@@ -3,6 +3,8 @@ import { users } from "./modules/user";
 import { logger } from "@bogeychan/elysia-logger";
 import staticPlugin from "@elysiajs/static";
 import { authentications } from "./modules/auth";
+import { armada } from "./modules/armada";
+import { testimoni } from "./modules/testimoni";
 
 const app = new Elysia()
   .use(
@@ -13,6 +15,8 @@ const app = new Elysia()
   // .use(staticPlugin())
   .use(authentications)
   .use(users)
+  .use(armada)
+  .use(testimoni)
   .get("/profile", () => {
     return {
       success: true,

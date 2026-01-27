@@ -23,21 +23,24 @@
         di Jeep Station Puncak
       </h1>
       <div class="rounded-lg bg-white p-6">
-        <div class="mb-4 flex items-center gap-2">
-          <input
-            type="checkbox"
-            id="drop-location"
-            class="h-4 w-4 rounded border-gray-300"
-          />
-          <label for="drop-location" class="text-xs text-gray-500"
-            >Drop at diffrent location</label
-          >
-        </div>
-
         <div>
-          <form action="" class="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <input type="text" class="rounded-md border px-2"/>
-            <DateRangePicker />
+          <form
+            action=""
+            class="grid grid-cols-1 gap-4 md:grid-cols-3 items-end"
+          >
+            <div>
+              <label for="" class="text-sm">Lokasi Penjemputan</label>
+              <br />
+              <input
+                type="text"
+                class="rounded-md border p-2 w-full mt-1"
+                placeholder="Rest area, Penginapan, Pom Bensin"
+              />
+            </div>
+            <div>
+              <label for="" class="text-sm">Tanggal Pengambilan</label>
+              <DateRangePicker />
+            </div>
             <Button variant="default" size="sm">Submit</Button>
           </form>
         </div>
