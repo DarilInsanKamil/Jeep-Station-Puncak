@@ -12,7 +12,6 @@ export const users = new Elysia({ prefix: '/users' })
             return error.toResponse();
         }
     })
-    .use(authGuard)
     .post(
         '/register',
         async ({ body }) => {
@@ -29,10 +28,11 @@ export const users = new Elysia({ prefix: '/users' })
         }
     }
     )
+    .use(authGuard)
     .patch(
         '/edit',
-        async ({ body, auth }) => {
-            const userId = auth.userId;
+        async ({ body, user }) => {
+            const userId = user.id;
             const response = await UserService.editUser(userId, body)
             return status(200, {
                 message: 'Berhasil edit data user',
