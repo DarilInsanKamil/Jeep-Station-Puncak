@@ -52,10 +52,14 @@ export const authentications = new Elysia({ prefix: '/auth' })
             })
         }, {
         body: UserModel.verifyUserPayload,
+        detail: {
+            summary: "Login",
+            tags: ['Authentications']
+        },
         response: {
             200: AuthModel.AuthSuccess,
             400: AuthModel.ErrorResponse
-        }
+        },
     }
     )
     .post(
@@ -112,6 +116,10 @@ export const authentications = new Elysia({ prefix: '/auth' })
                 message: 'access token berhasil di generate ulang'
             })
         }, {
+        detail: {
+            summary: "Refresh token",
+            tags: ['Authentications']
+        },
         response: {
             400: AuthModel.ErrorResponse
         }
@@ -125,5 +133,10 @@ export const authentications = new Elysia({ prefix: '/auth' })
             accessToken.remove()
             refreshToken.remove()
             return status(204)
-        }
+        }, {
+        detail: {
+            summary: "Logout",
+            tags: ['Authentications']
+        },
+    }
     )

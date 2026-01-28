@@ -22,6 +22,10 @@ export const users = new Elysia({ prefix: '/users' })
             })
         }, {
         body: UserModel.UserPayload,
+        detail: {
+            summary: "Register user public",
+            tags: ['Users']
+        },
         response: {
             201: UserModel.UserSuccess,
             400: UserModel.ErrorResponse
@@ -38,6 +42,10 @@ export const users = new Elysia({ prefix: '/users' })
             })
         }, {
         body: UserModel.UserPayload,
+        detail: {
+            summary: "Register user admin",
+            tags: ['Users']
+        },
         response: {
             201: UserModel.UserSuccess,
             400: UserModel.ErrorResponse
@@ -56,6 +64,10 @@ export const users = new Elysia({ prefix: '/users' })
             })
         }, {
         body: UserModel.EditUserPayload,
+        detail: {
+            summary: "Edit user",
+            tags: ['Users']
+        },
         response: {
             200: UserModel.UserSuccess,
             400: UserModel.ErrorResponse
