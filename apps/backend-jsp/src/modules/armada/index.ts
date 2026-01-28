@@ -32,7 +32,6 @@ export const armada = new Elysia({ prefix: '/armada' })
         }
     })
 
-
     .group('', (app) => app
         .use(adminGuard)
         .post('/create', async ({ body }) => {
@@ -67,4 +66,18 @@ export const armada = new Elysia({ prefix: '/armada' })
             await ArmadaService.deleteArmadaById(armadaId);
             return status(204);
         })
+        .patch(
+            '/:armadaId/gambar',
+            async ({ params, body }) => {
+                const gambar = body.gambar
+                const armadaId = params.armadaId
+                const url = await ArmadaService.updateArmadaGambar(armadaId, gambar)
+                return status(200, {
+                    coverUrl: url,
+                    message: 'Cover berhasil diperbarui'
+                })
+            }, {
+            body: ArmadaModel.UploadGambarArmada
+        }
+        )
     )

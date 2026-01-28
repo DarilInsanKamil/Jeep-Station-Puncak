@@ -6,9 +6,21 @@ import { ArmadaError } from "../../errors/armadaError";
 export abstract class ArmadaService {
     static async addArmada({ nama_armada, plat_nomor, kapasitas, deskripsi, gambar_armada }: ArmadaModel.ArmadaPayload) {
         const id = `armada-${nanoid(16)}`
+
+        if (!gambar_armada) {
+            throw new ArmadaError('Gambar armada is required', 400)
+        }
+
+        const fileName = `${id}-${Date.now()}.${gambar_armada.type.split('/')[1]}`
+        const path = `public/cars/${fileName}`
+
+        await Bun.write(path, gambar_armada)
+
+        const coverUrl = `/public/cars/${fileName}`
+
         const armadaQuery = {
             text: 'insert into armada ("id", "nama_armada", "plat_nomor", "kapasitas","deskripsi", "gambar_armada") values ($1, $2, $3, $4, $5, $6) returning "id"',
-            values: [id, nama_armada, plat_nomor, kapasitas, deskripsi, gambar_armada]
+            values: [id, nama_armada, plat_nomor, Number(kapasitas), deskripsi, coverUrl]
         }
         const result = await pool.query(armadaQuery)
 
@@ -68,4 +80,20 @@ export abstract class ArmadaService {
             throw new ArmadaError('Gagal menghapus data armada dengan id tersebut', 400)
         }
     }
+    static async updateArmadaGambar(armadaId: string, gambar: File) {
+        const fileName = `${armadaId}-${Date.now()}.${gambar.type.split('/')[1]}`
+        const path = `public/cars/${fileName}`
+
+        await Bun.write(path, gambar)
+
+        const coverUrl = `/public/cars/${fileName}`
+        const albumQuery = {
+            text: 'UPDATE armada SET gambar_armada = $1 WHERE id = $2',
+            values: [coverUrl, armadaId]
+        }
+        await pool.query(albumQuery)
+
+        return coverUrl
+    }
 }
+

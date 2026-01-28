@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import { users } from "./modules/user";
 import { logger } from "@bogeychan/elysia-logger";
-// import staticPlugin from "@elysiajs/static";
+import staticPlugin from "@elysiajs/static";
 import { authentications } from "./modules/auth";
 import { armada } from "./modules/armada";
 import { testimoni } from "./modules/testimoni";
@@ -12,7 +12,10 @@ const app = new Elysia()
       level: "info",
     })
   )
-  // .use(staticPlugin())
+  .use(staticPlugin({
+    assets: "public",
+    prefix: "/public"
+  }))
   .use(authentications)
   .use(users)
   .use(armada)

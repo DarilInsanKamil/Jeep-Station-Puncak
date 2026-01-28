@@ -3,9 +3,14 @@ import { t } from 'elysia'
 export namespace ArmadaModel {
     export const ArmadaPayload = t.Object({
         nama_armada: t.String({ minLength: 1 }),
-        gambar_armada: t.Optional(t.String({ minLength: 1 })),
+        gambar_armada: t.Optional(
+            t.File({
+                type: 'image',
+                maxSize: '6m'
+            })
+        ),
         plat_nomor: t.String({ minLength: 1 }),
-        kapasitas: t.Number(),
+        kapasitas: t.Numeric(),
         deskripsi: t.String({ minLength: 1 }),
     })
 
@@ -16,7 +21,7 @@ export namespace ArmadaModel {
         nama_armada: t.String({ minLength: 1 }),
         gambar_armada: t.Optional(t.String({ minLength: 1 })),
         plat_nomor: t.String({ minLength: 1 }),
-        kapasitas: t.Number(),
+        kapasitas: t.Numeric(),
         deskripsi: t.String({ minLength: 1 }),
         created_at: t.Date(),
         updated_at: t.Date()
@@ -29,12 +34,20 @@ export namespace ArmadaModel {
             nama_armada: t.String({ minLength: 1 }),
             gambar_armada: t.Optional(t.String({ minLength: 1 })),
             plat_nomor: t.String({ minLength: 1 }),
-            kapasitas: t.Number(),
+            kapasitas: t.Numeric(),
             deskripsi: t.String({ minLength: 1 }),
         })
     )
 
     export type ArmadaResponse = typeof ArmadaResponse.static;
+
+    export const UploadGambarArmada = t.Object({
+        gambar: t.File({
+            type: 'image',
+            maxSize: '6m'
+        })
+    })
+    export type UploadGambarArmada = typeof UploadGambarArmada.static
 
     export const ArmadaSuccess = t.Object({
         message: t.String({ minLength: 1 }),

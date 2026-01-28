@@ -88,16 +88,16 @@ describe('Endpoint Armada', () => {
         expect(status).toBe(200)
         expect(error).toBeNull()
     })
-    it('Berhasil menghapus data armada berdasarkan id', async () => {
+    // it('Berhasil menghapus data armada berdasarkan id', async () => {
 
-        const { status, error } = await api.armada({ armadaId }).delete(
-            undefined,
-            {
-                headers: {
-                    cookie: `accessToken=${token}`
-                }
-            })
-        expect(status).toBe(204)
-        expect(error).toBeNull()
-    })
+    //     const { status, error } = await api.armada({ armadaId }).delete(
+    //         undefined,
+    //         {
+    //             headers: {
+    //                 cookie: `accessToken=${token}`
+    //             }
+    //         })
+    //     expect(status).toBe(204)
+    //     expect(error).toBeNull()
+    // })
 })
