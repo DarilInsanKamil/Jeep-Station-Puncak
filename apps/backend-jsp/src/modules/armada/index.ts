@@ -16,6 +16,10 @@ export const armada = new Elysia({ prefix: '/armada' })
         const response = await ArmadaService.getAllArmada();
         return status(200, response);
     }, {
+        detail: {
+            summary: "Get all armada",
+            tags: ['Armada']
+        },
         response: {
             200: ArmadaModel.ArmadaResponse,
             400: ArmadaModel.ErrorResponse
@@ -26,12 +30,15 @@ export const armada = new Elysia({ prefix: '/armada' })
         const response = await ArmadaService.getArmadaById(armadaId);
         return status(200, response);
     }, {
+        detail: {
+            summary: "Get armada by id",
+            tags: ['Armada']
+        },
         response: {
             200: ArmadaModel.ArmadaResponseId,
             404: ArmadaModel.ErrorResponse
         }
     })
-
 
     .group('', (app) => app
         .use(adminGuard)
@@ -43,6 +50,10 @@ export const armada = new Elysia({ prefix: '/armada' })
             });
         }, {
             body: ArmadaModel.ArmadaPayload,
+            detail: {
+                summary: "Post armada",
+                tags: ['Armada']
+            },
             response: {
                 201: ArmadaModel.ArmadaSuccess,
                 400: ArmadaModel.ErrorResponse
@@ -57,14 +68,41 @@ export const armada = new Elysia({ prefix: '/armada' })
             });
         }, {
             body: ArmadaModel.ArmadaPayload,
+            detail: {
+                summary: "Edit armada by id",
+                tags: ['Armada']
+            },
             response: {
                 200: ArmadaModel.ArmadaSuccess,
                 400: ArmadaModel.ErrorResponse
             }
-        })
+        },)
         .delete('/:armadaId', async ({ params }) => {
             const armadaId = params.armadaId;
             await ArmadaService.deleteArmadaById(armadaId);
             return status(204);
+        }, {
+            detail: {
+                summary: "Delete armada by id",
+                tags: ['Armada']
+            },
         })
+        .patch(
+            '/:armadaId/gambar',
+            async ({ params, body }) => {
+                const gambar = body.gambar
+                const armadaId = params.armadaId
+                const url = await ArmadaService.updateArmadaGambar(armadaId, gambar)
+                return status(200, {
+                    coverUrl: url,
+                    message: 'Cover berhasil diperbarui'
+                })
+            }, {
+            body: ArmadaModel.UploadGambarArmada,
+            detail: {
+                summary: "Edit armada gambar armada by id",
+                tags: ['Armada']
+            },
+        }
+        )
     )

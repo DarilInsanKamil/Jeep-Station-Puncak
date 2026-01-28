@@ -1,6 +1,6 @@
 {
   "name": "jspapp",
-   "workspaces": [
+  "workspaces": [
     "apps/*"
   ],
   "module": "index.ts",
@@ -11,5 +11,9 @@
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.4.1",
+    "@elysiajs/openapi": "^1.4.14"
   }
 }

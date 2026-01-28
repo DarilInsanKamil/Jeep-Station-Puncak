@@ -15,6 +15,26 @@ export const users = new Elysia({ prefix: '/users' })
     .post(
         '/register',
         async ({ body }) => {
+            const response = await UserService.addUserPublic(body)
+            return status(201, {
+                message: 'Berhasil menambahkan user',
+                id: response
+            })
+        }, {
+        body: UserModel.UserPayload,
+        detail: {
+            summary: "Register user public",
+            tags: ['Users']
+        },
+        response: {
+            201: UserModel.UserSuccess,
+            400: UserModel.ErrorResponse
+        }
+    }
+    )
+    .post(
+        '/admin/register',
+        async ({ body }) => {
             const response = await UserService.addUser(body)
             return status(201, {
                 message: 'Berhasil menambahkan user',
@@ -22,6 +42,10 @@ export const users = new Elysia({ prefix: '/users' })
             })
         }, {
         body: UserModel.UserPayload,
+        detail: {
+            summary: "Register user admin",
+            tags: ['Users']
+        },
         response: {
             201: UserModel.UserSuccess,
             400: UserModel.ErrorResponse
@@ -40,6 +64,10 @@ export const users = new Elysia({ prefix: '/users' })
             })
         }, {
         body: UserModel.EditUserPayload,
+        detail: {
+            summary: "Edit user",
+            tags: ['Users']
+        },
         response: {
             200: UserModel.UserSuccess,
             400: UserModel.ErrorResponse

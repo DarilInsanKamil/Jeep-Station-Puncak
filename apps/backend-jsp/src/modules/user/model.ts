@@ -1,6 +1,14 @@
 import { t } from "elysia";
 
 export namespace UserModel {
+    export const UserPayloadPublic = t.Object({
+        email: t.String({ format: 'email', minLength: 1 }),
+        username: t.String({ minLength: 1 }),
+        password: t.String({ minLength: 1 }),
+    })
+
+    export type UserPayloadPublic = typeof UserPayloadPublic.static;
+    
     export const UserPayload = t.Object({
         email: t.String({ format: 'email', minLength: 1 }),
         username: t.String({ minLength: 1 }),

@@ -21,6 +21,10 @@ export const testimoni = new Elysia({ prefix: '/testimoni' })
             })
         }, {
         body: TestimoniModel.TestimoniPayload,
+        detail: {
+            summary: "Post testimoni",
+            tags: ['Testimoni']
+        },
         response: {
             201: TestimoniModel.TestimoniSuccess,
             400: TestimoniModel.ErrorResponse
@@ -33,6 +37,10 @@ export const testimoni = new Elysia({ prefix: '/testimoni' })
             const response = await TestimoniService.getAllTestimoni()
             return status(200, response)
         }, {
+        detail: {
+            summary: "Post all testimoni",
+            tags: ['Testimoni']
+        },
         response: {
             200: TestimoniModel.TestimoniResponse,
             400: TestimoniModel.ErrorResponse
@@ -46,6 +54,10 @@ export const testimoni = new Elysia({ prefix: '/testimoni' })
             const response = await TestimoniService.getTestimoniById(testimoniId)
             return status(200, response)
         }, {
+        detail: {
+            summary: "Get testimoni by id",
+            tags: ['Testimoni']
+        },
         response: {
             200: TestimoniModel.TestimoniResponseId,
             404: TestimoniModel.ErrorResponse,
@@ -63,6 +75,10 @@ export const testimoni = new Elysia({ prefix: '/testimoni' })
             })
         }, {
         body: TestimoniModel.TestimoniPayload,
+        detail: {
+            summary: "Edit testimoni by id",
+            tags: ['Testimoni']
+        },
         response: {
             200: TestimoniModel.TestimoniSuccess,
             400: TestimoniModel.ErrorResponse
@@ -75,5 +91,10 @@ export const testimoni = new Elysia({ prefix: '/testimoni' })
             const testimoniId = params.testimoniId
             const response = await TestimoniService.deleteTestimoniById(testimoniId)
             return status(204)
-        }
+        }, {
+        detail: {
+            summary: "Delete testimoni by id",
+            tags: ['Testimoni']
+        },
+    }
     )
