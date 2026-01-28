@@ -40,7 +40,7 @@ describe('Endpoint Armada', () => {
             plat_nomor: 'F 3455 JVK',
             kapasitas: 2,
             deskripsi: 'Mobil nissan terano tahun 2007',
-            gambar_armada: '/sakdj',
+            gambar_armada: new File([''], 'sakdj', { type: 'image/jpeg' }),
         }, {
             headers: {
                 cookie: `accessToken=${token}`

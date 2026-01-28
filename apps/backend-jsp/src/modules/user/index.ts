@@ -15,6 +15,22 @@ export const users = new Elysia({ prefix: '/users' })
     .post(
         '/register',
         async ({ body }) => {
+            const response = await UserService.addUserPublic(body)
+            return status(201, {
+                message: 'Berhasil menambahkan user',
+                id: response
+            })
+        }, {
+        body: UserModel.UserPayload,
+        response: {
+            201: UserModel.UserSuccess,
+            400: UserModel.ErrorResponse
+        }
+    }
+    )
+    .post(
+        '/admin/register',
+        async ({ body }) => {
             const response = await UserService.addUser(body)
             return status(201, {
                 message: 'Berhasil menambahkan user',

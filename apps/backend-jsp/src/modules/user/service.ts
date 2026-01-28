@@ -8,12 +8,32 @@ export abstract class UserService {
     static async addUser({ email, username, password, role }: UserModel.UserPayload) {
         try {
             const id = `user-${nanoid(16)}`
-            const date = new Date().toISOString()
             const hashedPassword = await bcrypt.hash(password, 10);
 
             const userQuery = {
-                text: 'insert into users ("id", "email", "username", "password", "role", "created_at", "updated_at") values ($1, $2, $3, $4, $5, $6, $7) returning "id"',
-                values: [id, email, username, hashedPassword, role, date, date]
+                text: 'insert into users ("id", "email", "username", "password", "role") values ($1, $2, $3, $4, $5) returning "id"',
+                values: [id, email, username, hashedPassword, role]
+            }
+            const result = await pool.query(userQuery)
+
+            if (!result.rows.length) {
+                throw new UserError("Gagal menambahkan user baru", 400)
+            }
+            return result.rows[0].id
+        } catch (err) {
+            console.error(err)
+            throw err
+        }
+    }
+
+    static async addUserPublic({ email, username, password }: UserModel.UserPayload) {
+        try {
+            const id = `user-${nanoid(16)}`
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            const userQuery = {
+                text: 'insert into users ("id", "email", "username", "password", "role") values ($1, $2, $3, $4, $5) returning "id"',
+                values: [id, email, username, hashedPassword, "user"]
             }
             const result = await pool.query(userQuery)
 
