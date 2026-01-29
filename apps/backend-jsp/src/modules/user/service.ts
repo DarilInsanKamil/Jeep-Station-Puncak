@@ -20,7 +20,12 @@ export abstract class UserService {
                 throw new UserError("Gagal menambahkan user baru", 400)
             }
             return result.rows[0].id
-        } catch (err) {
+        } catch (err: any) {
+            if (err.code === '23505') {
+                if (err.detail.includes('email')) {
+                    throw new UserError('Email sudah terdaftar, gunakan email lain', 400)
+                }
+            }
             console.error(err)
             throw err
         }

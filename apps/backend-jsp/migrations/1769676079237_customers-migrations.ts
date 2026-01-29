@@ -5,7 +5,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
     pgm.createTable('customers', {
         id: { type: 'text', notNull: true },
         nama_lengkap: { type: 'text', notNull: true },
-        email: { type: 'varchar(100)', notNull: true },
+        email: { type: 'varchar(100)', notNull: true, unique: true },
         no_hp: { type: 'varchar(100)', notNull: true },
         created_at: {
             type: 'timestamp',
