@@ -20,9 +20,10 @@ export abstract class GalleryService {
 
         return coverUrl
     }
+
     static async getAllImageGallery(limit: number) {
         const galleryQuery = {
-            text: 'select * from gallery limit = $1',
+            text: 'select * from gallery order by created_at desc limit $1',
             values: [limit]
         }
         const result = await pool.query(galleryQuery)
@@ -31,6 +32,7 @@ export abstract class GalleryService {
         }
         return result.rows
     }
+    
     static async verifyImageGallery(gambarId: string) {
         const galleryQuery = {
             text: 'select id from gallery where "id" = $1',
@@ -41,10 +43,11 @@ export abstract class GalleryService {
             throw new GalleryError('Gagal mengambil gambar, id tidak ada', 404)
         }
     }
+
     static async deleteImageGallery(gambarId: string) {
         await this.verifyImageGallery(gambarId)
         const galleryQuery = {
-            text: 'delete from gallery where "id" = $1',
+            text: 'delete from gallery where "id" = $1 returning id',
             values: [gambarId]
         }
         const result = await pool.query(galleryQuery)
