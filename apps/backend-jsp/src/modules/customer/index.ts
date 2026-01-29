@@ -1,8 +1,16 @@
 import Elysia, { status, t } from "elysia";
 import { CustomerService } from "./service";
 import { CustomerModel } from "./model";
+import { CustomerError } from "../../errors/customerError";
 
 export const customer = new Elysia({ prefix: '/customer' })
+    .error({ CUSTOMER_ERROR: CustomerError })
+    .onError(({ code, error, set }) => {
+        if (code === 'CUSTOMER_ERROR') {
+            set.status = error.status;
+            return error.toResponse();
+        }
+    })
     .post(
         '/create',
         async ({ body }) => {
