@@ -20,6 +20,11 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             default: pgm.func('current_timestamp'),
         },
     })
+    pgm.addConstraint('armada', 'armada_pkey', {
+        primaryKey: 'id'
+    })
 }
 
-export async function down(pgm: MigrationBuilder): Promise<void> { }
+export async function down(pgm: MigrationBuilder): Promise<void> {
+    pgm.dropTable('armada')
+}

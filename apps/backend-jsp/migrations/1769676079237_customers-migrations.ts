@@ -2,10 +2,11 @@ import { MigrationBuilder } from 'node-pg-migrate';
 
 
 export async function up(pgm: MigrationBuilder): Promise<void> {
-    pgm.createTable('gallery', {
+    pgm.createTable('customers', {
         id: { type: 'text', notNull: true },
-        gambar_url: { type: 'text', notNull: true },
-        deskripsi: { type: 'text', notNull: true },
+        nama_lengkap: { type: 'text', notNull: true },
+        email: { type: 'varchar(100)', notNull: true },
+        no_hp: { type: 'varchar(100)', notNull: true },
         created_at: {
             type: 'timestamp',
             notNull: true,
@@ -17,11 +18,11 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             default: pgm.func('current_timestamp'),
         },
     })
-    pgm.addConstraint('gallery', 'gallery_pkey', {
+    pgm.addConstraint('customers', 'customers_pkey', {
         primaryKey: 'id'
     })
 }
 
-export async function down(pgm: MigrationBuilder): Promise<void> { 
-    pgm.dropTable('gallery')
+export async function down(pgm: MigrationBuilder): Promise<void> {
+    pgm.dropTable('customers')
 }

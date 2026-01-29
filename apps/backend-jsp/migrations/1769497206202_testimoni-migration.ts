@@ -7,6 +7,12 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         name: { type: 'varchar(100)', notNull: true },
         komentar: { type: 'text', notNull: true },
         rating: { type: 'integer', notNull: true },
+        users_id: {
+            type: 'text',
+            notNull: false,
+            references: 'users',
+            onDelete: 'CASCADE'
+        },
         created_at: {
             type: 'timestamp',
             notNull: true,
@@ -18,6 +24,11 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             default: pgm.func('current_timestamp'),
         },
     })
+    pgm.addConstraint('testimoni', 'testimoni_pkey', {
+        primaryKey: 'id'
+    })
 }
 
-export async function down(pgm: MigrationBuilder): Promise<void> { }
+export async function down(pgm: MigrationBuilder): Promise<void> {
+    pgm.dropTable('testimoni')
+}
