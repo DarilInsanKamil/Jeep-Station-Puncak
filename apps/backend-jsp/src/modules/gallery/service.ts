@@ -20,9 +20,10 @@ export abstract class GalleryService {
 
         return coverUrl
     }
+
     static async getAllImageGallery(limit: number) {
         const galleryQuery = {
-            text: 'select * from gallery limit = $1',
+            text: 'select * from gallery order by created_at desc limit $1',
             values: [limit]
         }
         const result = await pool.query(galleryQuery)
@@ -31,6 +32,7 @@ export abstract class GalleryService {
         }
         return result.rows
     }
+    
     static async verifyImageGallery(gambarId: string) {
         const galleryQuery = {
             text: 'select id from gallery where "id" = $1',

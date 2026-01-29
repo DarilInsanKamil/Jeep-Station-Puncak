@@ -16,13 +16,34 @@ export const gallery = new Elysia({ prefix: '/gallery' })
         async ({ body }) => {
             const response = await GalleryService.uploadGambar(body)
             return status(201, {
-                message: '',
+                message: 'Berhasil menambah data gallery',
                 id: response
             })
         }, {
         body: GalleryModel.GalleryPayload,
+        response: {
+            201: GalleryModel.GallerySuccess,
+            400: GalleryModel.ErrorResponse
+        },
         detail: {
             summary: "Upload gambar",
+            tags: ["Gallery"]
+        }
+    }
+    )
+    .get(
+        '/',
+        async ({ query }) => {
+            const { limit = 5 } = query
+            const response = await GalleryService.getAllImageGallery(Number(limit))
+            return status(200, response)
+        }, {
+        response: {
+            200: GalleryModel.GalleryResponse,
+            400: GalleryModel.ErrorResponse
+        },
+        detail: {
+            summary: "Get Image Gallery",
             tags: ["Gallery"]
         }
     }
