@@ -4,7 +4,7 @@ import { pool } from "../../utils/db";
 import { ArmadaError } from "../../errors/armadaError";
 
 export abstract class ArmadaService {
-    static async addArmada({ nama_armada, plat_nomor, kapasitas, deskripsi, gambar_armada }: ArmadaModel.ArmadaPayload) {
+    static async addArmada({ nama_armada, plat_nomor, kapasitas, deskripsi, harga_sewa, gambar_armada }: ArmadaModel.ArmadaPayload) {
         const id = `armada-${nanoid(16)}`
 
         if (!gambar_armada) {
@@ -19,8 +19,8 @@ export abstract class ArmadaService {
         const coverUrl = `/public/cars/${fileName}`
 
         const armadaQuery = {
-            text: 'insert into armada ("id", "nama_armada", "plat_nomor", "kapasitas","deskripsi", "gambar_armada") values ($1, $2, $3, $4, $5, $6) returning "id"',
-            values: [id, nama_armada, plat_nomor, Number(kapasitas), deskripsi, coverUrl]
+            text: 'insert into armada ("id", "nama_armada" ,"plat_nomor", "kapasitas", "deskripsi", "gambar_armada", "harga_sewa") values ($1, $2, $3, $4, $5, $6, $7) returning "id"',
+            values: [id, nama_armada, plat_nomor, Number(kapasitas), deskripsi, coverUrl, harga_sewa]
         }
         const result = await pool.query(armadaQuery)
 
@@ -77,13 +77,13 @@ export abstract class ArmadaService {
         return result.rows[0]
     }
 
-    static async editArmadaById({ nama_armada, plat_nomor, kapasitas, deskripsi }: ArmadaModel.ArmadaPayload, armadaId: string) {
+    static async editArmadaById({ nama_armada, plat_nomor, kapasitas, deskripsi, harga_sewa }: ArmadaModel.ArmadaPayload, armadaId: string) {
         await this.getArmadaById(armadaId)
 
         const updated_at = new Date().toISOString()
         const armadaQuery = {
-            text: 'update armada set "nama_armada" = $1, "plat_nomor" = $2, "kapasitas" = $3, "deskripsi" = $4, "updated_at" = $5  where "id" = $6 returning id',
-            values: [nama_armada, plat_nomor, kapasitas, deskripsi, updated_at, armadaId]
+            text: 'update armada set "nama_armada" = $1, "plat_nomor" = $2, "kapasitas" = $3, "deskripsi" = $4, "updated_at" = $5, "harga_sewa" = $6  where "id" = $7 returning id',
+            values: [nama_armada, plat_nomor, kapasitas, deskripsi, updated_at, harga_sewa, armadaId]
         }
         const result = await pool.query(armadaQuery)
         if (!result.rows.length) {

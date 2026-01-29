@@ -9,6 +9,7 @@ export namespace ArmadaModel {
                 maxSize: '6m'
             })
         ),
+        harga_sewa: t.Numeric(),
         plat_nomor: t.String({ minLength: 1 }),
         kapasitas: t.Numeric(),
         deskripsi: t.String({ minLength: 1 }),
@@ -28,6 +29,7 @@ export namespace ArmadaModel {
         id: t.String({ minLength: 1 }),
         nama_armada: t.String({ minLength: 1 }),
         gambar_armada: t.Optional(t.String({ minLength: 1 })),
+        harga_sewa: t.Numeric(),
         plat_nomor: t.String({ minLength: 1 }),
         kapasitas: t.Numeric(),
         deskripsi: t.String({ minLength: 1 }),
@@ -40,6 +42,7 @@ export namespace ArmadaModel {
         t.Object({
             id: t.String({ minLength: 1 }),
             nama_armada: t.String({ minLength: 1 }),
+            harga_sewa: t.Numeric(),
             gambar_armada: t.Optional(t.String({ minLength: 1 })),
             plat_nomor: t.String({ minLength: 1 }),
             kapasitas: t.Numeric(),

@@ -9,6 +9,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         plat_nomor: { type: 'varchar(20)', notNull: true },
         kapasitas: { type: 'integer', notNull: true },
         deskripsi: { type: 'text', notNull: true },
+        harga_sewa: { type: 'bigint', notNull: true },
         created_at: {
             type: 'timestamp',
             notNull: true,
