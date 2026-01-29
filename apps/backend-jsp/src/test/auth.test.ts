@@ -7,8 +7,8 @@ const api = treaty<app>('localhost:3000')
 describe('Authentication Endpoint', () => {
     it('Berhasil Login', async () => {
         const { status, error } = await api.auth.login.post({
-            email: 'komang@mail.com',
-            password: '2132komang'
+            email: 'admin107@mail.com',
+            password: '2132admin'
         })
 
         expect(status).toBe(200)

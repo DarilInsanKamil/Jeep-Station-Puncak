@@ -7,6 +7,7 @@ import { cors } from '@elysiajs/cors';
 import { authentications } from "./modules/auth";
 import { armada } from "./modules/armada";
 import { testimoni } from "./modules/testimoni";
+import { gallery } from "./modules/gallery";
 
 const app = new Elysia()
   .use(
@@ -26,6 +27,7 @@ const app = new Elysia()
   .use(authentications)
   .use(armada)
   .use(testimoni)
+  .use(gallery)
   .listen(3000);
 
 console.log(

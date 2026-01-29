@@ -18,7 +18,7 @@ describe('Endpoint Armada', () => {
             role: 'admin'
         }
 
-        await api.users.register.post(adminPayload)
+        await api.users.admin.register.post(adminPayload)
 
         const { data: loginData, error: loginError } = await api.auth.login.post({
             email: adminPayload.email,

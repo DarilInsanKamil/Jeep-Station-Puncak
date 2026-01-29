@@ -12,10 +12,11 @@ export const armada = new Elysia({ prefix: '/armada' })
             return error.toResponse();
         }
     })
-    .get('/', async () => {
-        const response = await ArmadaService.getAllArmada();
+    .get('/', async ({ query }) => {
+        const response = await ArmadaService.getAllArmada(query);
         return status(200, response);
     }, {
+        query: ArmadaModel.GetArmadaQuery,
         detail: {
             summary: "Get all armada",
             tags: ['Armada']
