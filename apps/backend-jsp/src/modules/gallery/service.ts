@@ -43,10 +43,11 @@ export abstract class GalleryService {
             throw new GalleryError('Gagal mengambil gambar, id tidak ada', 404)
         }
     }
+
     static async deleteImageGallery(gambarId: string) {
         await this.verifyImageGallery(gambarId)
         const galleryQuery = {
-            text: 'delete from gallery where "id" = $1',
+            text: 'delete from gallery where "id" = $1 returning id',
             values: [gambarId]
         }
         const result = await pool.query(galleryQuery)

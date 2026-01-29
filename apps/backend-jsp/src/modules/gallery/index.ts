@@ -48,3 +48,16 @@ export const gallery = new Elysia({ prefix: '/gallery' })
         }
     }
     )
+    .delete(
+        '/:galleryId',
+        async ({ params }) => {
+            const galleryId = params.galleryId
+            await GalleryService.deleteImageGallery(galleryId)
+            return status(204)
+        }, {
+        detail: {
+            summary: "Delete Image Gallery",
+            tags: ["Gallery"]
+        }
+    }
+    )
