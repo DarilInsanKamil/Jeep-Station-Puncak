@@ -2,17 +2,11 @@ import { MigrationBuilder } from 'node-pg-migrate';
 
 
 export async function up(pgm: MigrationBuilder): Promise<void> {
-    pgm.createTable('testimoni', {
-        id: { type: 'varchar(100)', notNull: true },
-        name: { type: 'varchar(100)', notNull: true },
-        komentar: { type: 'text', notNull: true },
-        rating: { type: 'integer', notNull: true },
-        users_id: {
-            type: 'text',
-            notNull: false,
-            references: 'users',
-            onDelete: 'CASCADE'
-        },
+    pgm.createTable('customers', {
+        id: { type: 'text', notNull: true },
+        nama_lengkap: { type: 'text', notNull: true },
+        email: { type: 'varchar(100)', notNull: true },
+        no_hp: { type: 'varchar(100)', notNull: true },
         created_at: {
             type: 'timestamp',
             notNull: true,
@@ -24,11 +18,11 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             default: pgm.func('current_timestamp'),
         },
     })
-    pgm.addConstraint('testimoni', 'testimoni_pkey', {
+    pgm.addConstraint('customers', 'customers_pkey', {
         primaryKey: 'id'
     })
 }
 
 export async function down(pgm: MigrationBuilder): Promise<void> {
-    pgm.dropTable('testimoni')
+    pgm.dropTable('customers')
 }
