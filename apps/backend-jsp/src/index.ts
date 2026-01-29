@@ -8,6 +8,7 @@ import { authentications } from "./modules/auth";
 import { armada } from "./modules/armada";
 import { testimoni } from "./modules/testimoni";
 import { gallery } from "./modules/gallery";
+import { customer } from "./modules/customer";
 
 const app = new Elysia()
   .use(
@@ -28,6 +29,7 @@ const app = new Elysia()
   .use(armada)
   .use(testimoni)
   .use(gallery)
+  .use(customer)
   .listen(3000);
 
 console.log(

@@ -30,7 +30,7 @@ export abstract class ArmadaService {
         return result.rows[0].id
     }
 
-    static async getAllArmada({ page = 1, limit = 1, search, kapasitas }: ArmadaModel.GetArmadaQuery) {
+    static async getAllArmada({ page = 1, limit = 5, search, kapasitas }: ArmadaModel.GetArmadaQuery) {
 
         const offset = (page - 1) * limit;
         const conditions: string[] = [];
