@@ -13,8 +13,16 @@ export namespace ArmadaModel {
         kapasitas: t.Numeric(),
         deskripsi: t.String({ minLength: 1 }),
     })
-
     export type ArmadaPayload = typeof ArmadaPayload.static;
+
+    export const GetArmadaQuery = t.Object({
+        page: t.Optional(t.Numeric({ default: 1 })),
+        limit: t.Optional(t.Numeric({ default: 1 })),
+        search: t.Optional(t.String()),
+        kapasitas: t.Optional(t.Numeric()),
+
+    })
+    export type GetArmadaQuery = typeof GetArmadaQuery.static;
 
     export const ArmadaResponseId = t.Object({
         id: t.String({ minLength: 1 }),

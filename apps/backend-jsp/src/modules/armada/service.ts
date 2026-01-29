@@ -30,15 +30,38 @@ export abstract class ArmadaService {
         return result.rows[0].id
     }
 
-    static async getAllArmada() {
-        const armadaQuery = {
-            text: 'select "id", "nama_armada", "plat_nomor", "kapasitas", "deskripsi", "gambar_armada" from armada',
+    static async getAllArmada({ page = 1, limit = 1, search, kapasitas }: ArmadaModel.GetArmadaQuery) {
+
+        const offset = (page - 1) * limit;
+        const conditions: string[] = [];
+        const values: any[] = [];
+        let counter = 1;
+
+        if (search) {
+            conditions.push(`nama_armada ILIKE $${counter++}`);
+            values.push(`%${search}%`);
         }
 
-        const result = await pool.query(armadaQuery)
-        if (!result.rows.length) {
-            throw new ArmadaError('Gagal mengambil data armada', 400)
+        if (kapasitas) {
+            conditions.push(`kapasitas = $${counter++}`)
+            values.push(kapasitas)
         }
+
+        const whereClause = conditions.length > 0 ? `where ${conditions.join('AND')}` : '';
+
+
+        const armadaQuery = `select "id", "nama_armada", "plat_nomor", "kapasitas", "deskripsi", "gambar_armada" from armada ${whereClause} order by created_at desc limit $${counter++} offset $${counter++}`
+        values.push(limit, offset)
+
+        const result = await pool.query({
+            text: armadaQuery,
+            values: values
+        });
+
+        if (!result.rows.length) {
+            throw new ArmadaError('Gagal mengambil data armada', 404)
+        }
+
         return result.rows
     }
 
