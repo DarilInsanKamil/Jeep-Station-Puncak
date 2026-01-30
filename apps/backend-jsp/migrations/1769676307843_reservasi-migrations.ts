@@ -18,7 +18,11 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             references: 'armada',
             onDelete: 'RESTRICT'
         },
-        tanggal_wisata: {
+        tanggal_mulai: {
+            type: 'date',
+            notNull: true
+        },
+        tanggal_selesai: {
             type: 'date',
             notNull: true
         },
@@ -64,7 +68,8 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
     })
     pgm.createIndex('reservasi', 'customer_id');
     pgm.createIndex('reservasi', 'armada_id');
-    pgm.createIndex('reservasi', 'tanggal_wisata');
+    pgm.createIndex('reservasi', 'tanggal_mulai');
+    pgm.createIndex('reservasi', 'tanggal_selesai');
     pgm.createIndex('reservasi', 'kode_booking');
 }
 

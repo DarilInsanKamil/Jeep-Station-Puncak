@@ -2,23 +2,25 @@ import { nanoid } from "nanoid";
 import { pool } from "../../utils/db";
 import { CustomerModel } from "./model";
 import { CustomerError } from "../../errors/customerError";
+import { PoolClient } from "pg";
 
 export abstract class CustomerService {
 
-    static async addCustomer({ nama_lengkap, email, no_hp }: CustomerModel.CustomerPayload) {
+    static async addCustomer({ nama_lengkap, email, no_hp, alamat }: CustomerModel.CustomerPayload, client?: PoolClient) {
+        const db = client || pool;
         const id = `customer-${nanoid(16)}`
+
         const customerQuery = {
-            text: `insert into customers ("id", "nama_lengkap", "email", "no_hp") 
+            text: `insert into customers ("id", "nama_lengkap", "email", "no_hp", "alamat") 
             values ($1, $2, $3, $4) on conflict ("email") do update set "nama_lengkap" = excluded.nama_lengkap,
-            "no_hp" = excluded.no_hp, "updated_at" = NOW() returning id`,
-            values: [id, nama_lengkap, email, no_hp]
+            "no_hp" = excluded.no_hp, "alamat" = excluded.alamat, "updated_at" = NOW() returning id`,
+            values: [id, nama_lengkap, email, no_hp, alamat]
         }
-        const result = await pool.query(customerQuery)
+        const result = await db.query(customerQuery)
         if (!result.rows.length) {
             throw new CustomerError('Gagal menambah data customer', 400)
         }
         return result.rows[0].id
-
     }
     static async getCustomer({ limit = 5, page = 1, search = '' }: CustomerModel.GetCustomerQuery) {
         const offset = (page - 1) * limit;
@@ -33,7 +35,7 @@ export abstract class CustomerService {
         const whereClause = conditions.length > 0 ? `where ${conditions.join('AND')}` : '';
 
         const customerQuery = `
-        select "id", "nama_lengkap", "email", "no_hp", "created_at" from customers ${whereClause}
+        select "id", "nama_lengkap", "email", "no_hp", "alamat", "created_at" from customers ${whereClause}
         order by created_at desc limit $${counter++} offset $${counter++}
         `
 
@@ -57,12 +59,12 @@ export abstract class CustomerService {
         return result.rows[0]
     }
 
-    static async editCustomerById({ nama_lengkap, email, no_hp }: CustomerModel.CustomerPayload, customerId: string) {
+    static async editCustomerById({ nama_lengkap, email, no_hp, alamat }: CustomerModel.CustomerPayload, customerId: string) {
         await this.getCustomerById(customerId)
 
         const customerQuery = {
-            text: 'update customers set "nama_lengkap" = $1, "no_hp" = $2, "email" = $3, "updated_at" = NOW() where "id" = $4 returning id',
-            values: [nama_lengkap, no_hp, email, customerId]
+            text: 'update customers set "nama_lengkap" = $1, "no_hp" = $2, "email" = $3, "alamat" = $4 ,"updated_at" = NOW() where "id" = $5 returning id',
+            values: [nama_lengkap, no_hp, email, alamat, customerId]
         }
         const result = await pool.query(customerQuery)
         if (!result.rows.length) {
