@@ -12,7 +12,7 @@ export abstract class CustomerService {
 
         const customerQuery = {
             text: `insert into customers ("id", "nama_lengkap", "email", "no_hp", "alamat") 
-            values ($1, $2, $3, $4) on conflict ("email") do update set "nama_lengkap" = excluded.nama_lengkap,
+            values ($1, $2, $3, $4, $5) on conflict ("email") do update set "nama_lengkap" = excluded.nama_lengkap,
             "no_hp" = excluded.no_hp, "alamat" = excluded.alamat, "updated_at" = NOW() returning id`,
             values: [id, nama_lengkap, email, no_hp, alamat]
         }
