@@ -47,9 +47,18 @@ export abstract class ReservasiService {
 
             const pembayaranId = `pay-${nanoid(16)}`
             await client.query({
-                text: `insert into pembayaran ("id", "reservasi_id", "metode_pembayaran", "nominal", "status")
-                values ($1, $2, $3, $4, $5) returning id`,
-                values: [pembayaranId, reservasiId, reservasi.metode_pembayaran, reservasi.total_harga, "Pending"]
+                text: `INSERT INTO pembayaran 
+           ("id", "reservasi_id", "metode_pembayaran", "nominal", "status", "jenis_pembayaran")
+           VALUES ($1, $2, $3, $4, $5, $6) 
+           RETURNING id`,
+                values: [
+                    pembayaranId,
+                    reservasiId,
+                    reservasi.metode_pembayaran,
+                    reservasi.total_harga,
+                    "Pending",
+                    "DP"
+                ]
             })
             await client.query('COMMIT')
             return {
