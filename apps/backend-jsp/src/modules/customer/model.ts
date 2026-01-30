@@ -4,6 +4,7 @@ export namespace CustomerModel {
         nama_lengkap: t.String({ minLength: 1 }),
         email: t.String({ minLength: 1, format: 'email' }),
         no_hp: t.String({ minLength: 1 }),
+        alamat: t.String({ minLength: 1 }),
     })
     export type CustomerPayload = typeof CustomerPayload.static
 
@@ -11,6 +12,7 @@ export namespace CustomerModel {
         nama_lengkap: t.String({ minLength: 1 }),
         email: t.String({ minLength: 1, format: 'email' }),
         no_hp: t.String({ minLength: 1 }),
+        alamat: t.String({ minLength: 1 }),
         created_at: t.Date(),
         updated_at: t.Date()
     })

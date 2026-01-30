@@ -1,4 +1,6 @@
 import Elysia, { status } from "elysia";
+import { ReservasiModel } from "./model";
+import { ReservasiService } from "./service";
 
 export const reservasi = new Elysia({ prefix: '/reservasi' })
     .get(
@@ -11,6 +13,19 @@ export const reservasi = new Elysia({ prefix: '/reservasi' })
         }, {
         detail: {
             summary: 'Get data reservasi',
+            tags: ["Reservasi"]
+        }
+    }
+    )
+    .post(
+        '/create',
+        async ({ body }) => {
+            const response = await ReservasiService.addReservasi(body)
+            return status(201, response)
+        }, {
+        body: ReservasiModel.ReservasiPayload,
+        detail: {
+            summary: 'Post data reservasi',
             tags: ["Reservasi"]
         }
     }

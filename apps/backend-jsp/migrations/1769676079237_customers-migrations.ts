@@ -7,6 +7,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         nama_lengkap: { type: 'text', notNull: true },
         email: { type: 'varchar(100)', notNull: true, unique: true },
         no_hp: { type: 'varchar(100)', notNull: true },
+        alamat: { type: 'text', notNull: true },
         created_at: {
             type: 'timestamp',
             notNull: true,
