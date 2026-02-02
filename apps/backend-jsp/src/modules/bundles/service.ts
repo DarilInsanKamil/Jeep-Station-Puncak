@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import { BundlesModel } from "./model";
 import { BundlesError } from "../../errors/bundlesError";
 import { pool } from "../../utils/db";
+import { unlink } from "node:fs/promises";
 
 export abstract class BundlesService {
     static async addBundles(payload: BundlesModel.BundlesPayload) {
@@ -66,7 +67,24 @@ export abstract class BundlesService {
         return result.rows[0].id
     }
     static async deleteBundleById(bundleId: string) {
-        await this.getBundleById(bundleId)
+        const bundleData = await this.getBundleById(bundleId)
+
+        if (bundleData.gambar_bundles) {
+
+            const filePath = bundleData.gambar_bundles.startsWith('/')
+                ? bundleData.gambar_bundles.slice(1)
+                : bundleData.gambar_bundles;
+
+            try {
+                const file = Bun.file(filePath);
+                if (await file.exists()) {
+                    await unlink(filePath);
+                    console.log(`[File Deleted] ${filePath}`);
+                }
+            } catch (err) {
+                console.error(`Gagal menghapus file fisik: ${filePath}`, err);
+            }
+        }
 
         const armadaQuery = {
             text: 'delete from bundles where "id" = $1 returning id',
