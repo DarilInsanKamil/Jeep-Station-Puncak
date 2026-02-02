@@ -7,7 +7,8 @@ export namespace ReservasiModel {
             tanggal_selesai: t.String({ minLength: 1 }),
             armada_id: t.String({ minLength: 1 }),
             total_harga: t.String({ minLength: 1 }),
-            metode_pembayaran: t.String({ minLength: 1 })
+            metode_pembayaran: t.String({ minLength: 1 }),
+            jumlah_unit: t.Numeric()
         }),
         customer: t.Object({
             nama_lengkap: t.String({ minLength: 1 }),
