@@ -2,6 +2,8 @@ import { nanoid } from "nanoid"
 import { pool } from "../../utils/db"
 import { GalleryError } from "../../errors/galleryError"
 import { GalleryModel } from "./model"
+import { unlink } from "node:fs/promises";
+
 
 export abstract class GalleryService {
     static async uploadGambar({ deskripsi, gambar_url }: GalleryModel.GalleryPayload) {
@@ -32,7 +34,7 @@ export abstract class GalleryService {
         }
         return result.rows
     }
-    
+
     static async verifyImageGallery(gambarId: string) {
         const galleryQuery = {
             text: 'select id from gallery where "id" = $1',
@@ -42,10 +44,29 @@ export abstract class GalleryService {
         if (!result.rows.length) {
             throw new GalleryError('Gagal mengambil gambar, id tidak ada', 404)
         }
+        return result.rows[0]
     }
 
     static async deleteImageGallery(gambarId: string) {
-        await this.verifyImageGallery(gambarId)
+        const galleryData = await this.verifyImageGallery(gambarId)
+
+        if (galleryData.gambar_url) {
+
+            const filePath = galleryData.gambar_url.startsWith('/')
+                ? galleryData.gambar_url.slice(1)
+                : galleryData.gambar_url;
+
+            try {
+                const file = Bun.file(filePath);
+                if (await file.exists()) {
+                    await unlink(filePath);
+                    console.log(`[File Deleted] ${filePath}`);
+                }
+            } catch (err) {
+                console.error(`Gagal menghapus file fisik: ${filePath}`, err);
+            }
+        }
+
         const galleryQuery = {
             text: 'delete from gallery where "id" = $1 returning id',
             values: [gambarId]

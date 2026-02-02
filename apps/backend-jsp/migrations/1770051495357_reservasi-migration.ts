@@ -14,9 +14,19 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         },
         armada_id: {
             type: 'text',
-            notNull: true,
+            notNull: false,
             references: 'armada',
             onDelete: 'RESTRICT'
+        },
+        jumlah_unit: {
+            type: 'integer',
+            notNull: true,
+        },
+        bundle_id: {
+            type: 'text',
+            notNull: false,
+            references: 'bundles',
+            onDelete: 'CASCADE'
         },
         tanggal_mulai: {
             type: 'date',

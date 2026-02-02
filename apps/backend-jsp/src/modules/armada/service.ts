@@ -2,6 +2,8 @@ import { nanoid } from "nanoid";
 import { ArmadaModel } from "./model";
 import { pool } from "../../utils/db";
 import { ArmadaError } from "../../errors/armadaError";
+import { unlink } from "node:fs/promises";
+
 
 export abstract class ArmadaService {
     static async addArmada({ nama_armada, plat_nomor, kapasitas, deskripsi, harga_sewa, gambar_armada }: ArmadaModel.ArmadaPayload) {
@@ -92,7 +94,24 @@ export abstract class ArmadaService {
         return result.rows[0].id
     }
     static async deleteArmadaById(armadaId: string) {
-        await this.getArmadaById(armadaId)
+        const armadaData = await this.getArmadaById(armadaId)
+        
+        if (armadaData.gambar_armada) {
+
+            const filePath = armadaData.gambar_armada.startsWith('/')
+                ? armadaData.gambar_armada.slice(1)
+                : armadaData.gambar_armada;
+
+            try {
+                const file = Bun.file(filePath);
+                if (await file.exists()) {
+                    await unlink(filePath);
+                    console.log(`[File Deleted] ${filePath}`);
+                }
+            } catch (err) {
+                console.error(`Gagal menghapus file fisik: ${filePath}`, err);
+            }
+        }
         const armadaQuery = {
             text: 'delete from armada where "id" = $1 returning id',
             values: [armadaId]

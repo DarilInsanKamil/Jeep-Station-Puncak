@@ -2,26 +2,34 @@ import { MigrationBuilder } from 'node-pg-migrate';
 
 
 export async function up(pgm: MigrationBuilder): Promise<void> {
-    pgm.createTable('pembayaran', {
+    pgm.createTable('bundles', {
         id: {
             type: 'text',
             notNull: true
         },
-        reservasi_id: {
+        title: {
+            type: 'varchar(100)',
+            notNull: true
+        },
+        harga: {
+            type: 'bigint',
+            notNull: true
+        },
+        deskripsi: {
             type: 'text',
-            references: 'reservasi',
-            onDelete: 'CASCADE',
             notNull: true
         },
-        jenis_pembayaran: {
-            type: 'varchar(50)',
-            notNull: true
+        jumlah_unit: {
+            type: 'integer',
+            notNull: true,
+            default: 1
         },
-        nominal: { type: 'bigint', notNull: true },
-        metode_pembayaran: { type: 'text' },
-        status: {
-            type: 'varchar(30)',
-            default: 'Success'
+        addOns: {
+            type: 'jsonb'
+        },
+        gambar_bundles: {
+            type: 'text',
+            notNull: true
         },
         created_at: {
             type: 'timestamp',
@@ -33,12 +41,13 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
             notNull: true,
             default: pgm.func('current_timestamp'),
         },
+
     })
-    pgm.addConstraint('pembayaran', 'pembayaran_pkey', {
+    pgm.addConstraint('bundles', 'bundles_pkey', {
         primaryKey: 'id'
     })
 }
 
 export async function down(pgm: MigrationBuilder): Promise<void> {
-    pgm.dropTable('pembayaran')
+    pgm.dropTable('bundles')
 }
