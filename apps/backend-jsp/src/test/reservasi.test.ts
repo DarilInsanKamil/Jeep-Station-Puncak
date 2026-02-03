@@ -12,7 +12,7 @@ describe('Reservasi Endpoint', () => {
 
     beforeAll(async () => {
         const { data, error } = await api.auth.login.post({
-            email: 'user-1770109550034@mail.com',
+            email: 'user-1770116099251@mail.com',
             password: '2132daril'
         })
 
@@ -39,7 +39,8 @@ describe('Reservasi Endpoint', () => {
     })
 
     it('Berhasil membuat reservasi baru', async () => {
-        const uniqueEmail = `customer-${Date.now()}67@mail.com`
+        const uniqueEmail = `customer-${Date.now()}@mail.com`
+        const uniqueUsername = `customer-${Date.now()}`
         const { data, error, status } = await api.reservasi.create.post({
             reservasi: {
                 tanggal_mulai: '2026-03-01',
@@ -50,7 +51,7 @@ describe('Reservasi Endpoint', () => {
                 jumlah_unit: 1
             },
             customer: {
-                nama_lengkap: 'Test Customer',
+                nama_lengkap: uniqueUsername,
                 email: uniqueEmail,
                 no_hp: '081234567890',
                 alamat: 'Test Address'

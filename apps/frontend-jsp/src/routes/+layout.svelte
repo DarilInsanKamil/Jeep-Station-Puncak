@@ -9,9 +9,9 @@
   <link rel="icon" href={favicon} />
 </svelte:head>
 
-<nav class="relative w-full">
+<!-- <nav class="relative w-full">
   <Navigation />
-</nav>
+</nav> -->
 <main>
   {@render children()}
 </main>

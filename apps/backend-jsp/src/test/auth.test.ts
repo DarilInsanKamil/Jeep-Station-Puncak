@@ -11,7 +11,7 @@ describe('Auth Endpoint', () => {
 
     it('Berhasil login dengan kredensial yang benar', async () => {
         const { data, error, status } = await api.auth.login.post({
-            email: 'user-1770109550034@mail.com',
+            email: 'user-1770116099251@mail.com',
             password: '2132daril'
         })
         expect(status).toBe(200)

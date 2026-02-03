@@ -4,10 +4,9 @@
   import Navigation from "../../components/Navigation.svelte";
 </script>
 
-<nav class="relative w-full">
+<!-- <nav class="relative w-full">
   <Navigation />
-</nav>
+</nav> -->
 <main>
   {@render children()}
 </main>
-<footer>ini footer</footer>
