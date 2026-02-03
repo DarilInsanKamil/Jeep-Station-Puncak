@@ -1,4 +1,4 @@
-import Elysia, { status } from "elysia";
+import Elysia, { status, t } from "elysia";
 import { BundlesService } from "./service";
 import { BundlesModel } from "./model";
 
@@ -93,4 +93,26 @@ export const bundles = new Elysia({ prefix: '/bundles' })
             404: BundlesModel.ErrorResponse
         }
     }
+    )
+    .patch(
+        '/:bundleId/gambar',
+        async ({ params, body }) => {
+            const bundleId = params.bundleId
+            const response = await BundlesService.updateGambarBundle(bundleId, body)
+            return status(200, {
+                message: 'Berhasil mengubah data gambar',
+                id: response
+            })
+        },
+        {
+            body: t.File({ maxSize: '6m', type: 'image/*' }),
+            response: {
+                200: BundlesModel.BudndlesSuccess,
+                400: BundlesModel.ErrorResponse
+            },
+            detail: {
+                summary: 'PATCH gambar bundle by Id',
+                tags: ["Bundle"]
+            }
+        }
     )

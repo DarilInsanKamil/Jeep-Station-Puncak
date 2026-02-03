@@ -6,13 +6,10 @@ export const authGuard = new Elysia()
     .use(jwtPlugin)
     .derive(async ({ cookie, jwt, set, request }) => {
         const authHeader = request.headers.get('authorization');
+
         let token = authHeader && authHeader.startsWith('Bearer ')
             ? authHeader.slice(7)
-            : null;
-
-        if (!token) {
-            token = (cookie.accessToken?.value as string) || null;
-        }
+            : cookie.accessToken?.value;
 
         if (!token) {
             set.status = 401;
@@ -26,10 +23,13 @@ export const authGuard = new Elysia()
             throw new Error('Invalid access token');
         }
 
-        const user = await UserService.getUserById(payload.sub as string)
-        console.log(user)
         return {
-            user: user
+            auth: {
+                id: payload.sub as string,
+                role: payload.role as string,
+                email: payload.email as string,
+                username: payload.username as string
+            }
         };
     })
     .as('scoped')

@@ -111,4 +111,36 @@ export abstract class ReservasiService {
             client.release();
         }
     }
+
+    static async getAllReservasi(userRole: string, page = 1, limit = 10, search?: string) {
+        const offset = (page - 1) * limit
+
+        if (userRole == 'admin') {
+            const reservasiQuery = {
+                text: `select r.id, r.kode_booking, r.tanggal_mulai, r.tanggal_selesai, 
+                r.status_transaksi, r.total_harga, r.jumlah_unit, c.nama_lengkap as nama_customer, a.nama_armada,
+                b.title as nama_bundle from reservasi r join customers c on r.customer_id = c.id left join armada
+                a on r.armada_id = a.id left join bundles b on r.bundle_id = b.id where c.nama_lengkap ilike $1 or r.kode_booking = $1
+                order by r.created_at desc limit $2 offset $3`,
+                values: [`%${search || ''}%`, limit, offset]
+            }
+            const result = await pool.query(reservasiQuery)
+            return result.rows
+        } throw new ReservasiError('Forbidden hanya admin yang bisa akses', 403)
+    }
+    static async getReservasiById(reservasiId: string) {
+        const reservasiQuery = {
+            text: `select r.* c.nama_lengkap as nama_customer, c.email, c.no_hp, c.alamat,
+            a.nama_armada, a.plat_nomor, a.gambar_armada,
+            b.title as nama_bundle, b.deskripsi as deskripsi_bundle
+            from reservasi r join customers c on r.customer_id = c.id left join armada a on r.armada_id = a.id
+            left join bundles b on r.bundle_id = b.id where r.id =  $1`,
+            values: [reservasiId]
+        }
+        const result = await pool.query(reservasiQuery)
+        if (!result.rows.length) {
+            throw new ReservasiError('Data reservasi tidak ditemukan', 404)
+        }
+        return result.rows[0]
+    }
 }

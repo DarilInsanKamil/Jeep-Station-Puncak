@@ -1,22 +1,10 @@
 import Elysia, { status } from "elysia";
 import { ReservasiModel } from "./model";
 import { ReservasiService } from "./service";
+import { adminGuard } from "../../utils/adminGuard";
 
 export const reservasi = new Elysia({ prefix: '/reservasi' })
-    .get(
-        '/',
-        async () => {
-            return status(200, {
-                name: 'Daril',
-                NIM: '22011003005'
-            })
-        }, {
-        detail: {
-            summary: 'Get data reservasi',
-            tags: ["Reservasi"]
-        }
-    }
-    )
+    .use(adminGuard)
     .post(
         '/create',
         async ({ body }) => {
@@ -27,6 +15,40 @@ export const reservasi = new Elysia({ prefix: '/reservasi' })
         detail: {
             summary: 'Post data reservasi',
             tags: ["Reservasi"]
+        }
+    }
+    )
+    .get(
+        '/',
+        async ({ auth }) => {
+            const role = auth.role
+            const response = await ReservasiService.getAllReservasi(role)
+            return status(200, response)
+        }, {
+        detail: {
+            summary: 'GET all data reservasi',
+            tags: ['Reservasi']
+        },
+        response: {
+            200: ReservasiModel.ReservasiResponse,
+            400: ReservasiModel.ErrorResponse
+        }
+    }
+    )
+    .get(
+        '/:reservasiId',
+        async ({ params }) => {
+            const reservasiId = params.reservasiId
+            const response = await ReservasiService.getReservasiById(reservasiId)
+            return status(200, response)
+        }, {
+        response: {
+            200: ReservasiModel.ReservasiResponseById,
+            400: ReservasiModel.ErrorResponse
+        },
+        detail: {
+            summary: 'GET reservasi by Id',
+            tags: ['Reservasi']
         }
     }
     )
