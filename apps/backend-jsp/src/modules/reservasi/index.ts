@@ -2,8 +2,16 @@ import Elysia, { status } from "elysia";
 import { ReservasiModel } from "./model";
 import { ReservasiService } from "./service";
 import { adminGuard } from "../../utils/adminGuard";
+import { ReservasiError } from "../../errors/reservasiError";
 
 export const reservasi = new Elysia({ prefix: '/reservasi' })
+    .error({ RESERVASI_ERROR: ReservasiError })
+    .onError(({ code, error, set }) => {
+        if (code === 'RESERVASI_ERROR') {
+            set.status = error.status;
+            return error.toResponse();
+        }
+    })
     .post(
         '/create',
         async ({ body }) => {

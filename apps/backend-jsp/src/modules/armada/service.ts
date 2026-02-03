@@ -6,6 +6,7 @@ import { unlink } from "node:fs/promises";
 
 
 export abstract class ArmadaService {
+
     static async addArmada({ nama_armada, plat_nomor, kapasitas, deskripsi, harga_sewa, gambar_armada }: ArmadaModel.ArmadaPayload) {
         const id = `armada-${nanoid(16)}`
 
@@ -93,9 +94,11 @@ export abstract class ArmadaService {
         }
         return result.rows[0].id
     }
+
     static async deleteArmadaById(armadaId: string) {
+
         const armadaData = await this.getArmadaById(armadaId)
-        
+
         if (armadaData.gambar_armada) {
 
             const filePath = armadaData.gambar_armada.startsWith('/')
@@ -112,6 +115,7 @@ export abstract class ArmadaService {
                 console.error(`Gagal menghapus file fisik: ${filePath}`, err);
             }
         }
+
         const armadaQuery = {
             text: 'delete from armada where "id" = $1 returning id',
             values: [armadaId]
@@ -122,6 +126,7 @@ export abstract class ArmadaService {
             throw new ArmadaError('Gagal menghapus data armada dengan id tersebut', 400)
         }
     }
+
     static async updateArmadaGambar(armadaId: string, gambar: File) {
         const fileName = `${armadaId}-${Date.now()}.${gambar.type.split('/')[1]}`
         const path = `public/cars/${fileName}`

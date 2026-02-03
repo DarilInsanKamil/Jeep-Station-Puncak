@@ -30,7 +30,7 @@ export namespace ReservasiModel {
             jumlah_unit: t.Numeric(),
             nama_customer: t.String(),
             nama_armada: t.String(),
-            nama_bundle: t.Optional(t.String()),
+            nama_bundle:  t.Union([t.String(), t.Null()]),
             created_at: t.Date(),
             updated_at: t.Date()
         })
@@ -50,7 +50,7 @@ export namespace ReservasiModel {
         jumlah_unit: t.Numeric(),
         nama_customer: t.String(),
         nama_armada: t.String(),
-        nama_bundle: t.Optional(t.String()),
+        nama_bundle:  t.Union([t.String(), t.Null()]),
         created_at: t.Date(),
         updated_at: t.Date()
     })

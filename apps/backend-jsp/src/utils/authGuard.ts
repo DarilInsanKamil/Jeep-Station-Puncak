@@ -5,7 +5,9 @@ import { UserService } from '../modules/user/service';
 export const authGuard = new Elysia()
     .use(jwtPlugin)
     .derive(async ({ cookie, jwt, set, request }) => {
-        const authHeader = request.headers.get('authorization');
+        const authHeader =
+            request.headers.get('authorization') ||
+            request.headers.get('Authorization');
 
         let token = authHeader && authHeader.startsWith('Bearer ')
             ? authHeader.slice(7)

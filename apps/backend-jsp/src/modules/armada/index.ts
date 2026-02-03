@@ -18,7 +18,7 @@ export const armada = new Elysia({ prefix: '/armada' })
     }, {
         query: ArmadaModel.GetArmadaQuery,
         detail: {
-            summary: "Get all armada",
+            summary: "GET all armada",
             tags: ['Armada']
         },
         response: {
@@ -32,7 +32,7 @@ export const armada = new Elysia({ prefix: '/armada' })
         return status(200, response);
     }, {
         detail: {
-            summary: "Get armada by id",
+            summary: "GET armada by id",
             tags: ['Armada']
         },
         response: {
@@ -52,7 +52,7 @@ export const armada = new Elysia({ prefix: '/armada' })
         }, {
             body: ArmadaModel.ArmadaPayload,
             detail: {
-                summary: "Post armada",
+                summary: "POST armada",
                 tags: ['Armada']
             },
             response: {
@@ -70,7 +70,7 @@ export const armada = new Elysia({ prefix: '/armada' })
         }, {
             body: ArmadaModel.ArmadaPayload,
             detail: {
-                summary: "Edit armada by id",
+                summary: "PATCH armada by id",
                 tags: ['Armada']
             },
             response: {
@@ -84,7 +84,7 @@ export const armada = new Elysia({ prefix: '/armada' })
             return status(204);
         }, {
             detail: {
-                summary: "Delete armada by id",
+                summary: "DELETE armada by id",
                 tags: ['Armada']
             },
         })
@@ -101,7 +101,7 @@ export const armada = new Elysia({ prefix: '/armada' })
             }, {
             body: ArmadaModel.UploadGambarArmada,
             detail: {
-                summary: "Edit armada gambar armada by id",
+                summary: "PATCH armada gambar armada by id",
                 tags: ['Armada']
             },
         }

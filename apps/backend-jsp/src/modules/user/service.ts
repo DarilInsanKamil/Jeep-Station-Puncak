@@ -69,7 +69,7 @@ export abstract class UserService {
         const date = new Date().toISOString()
         const hashedPassword = await bcrypt.hash(password, 10);
         const userQuery = {
-            text: 'update users set "username" = $1, "password" = $2, "role" = $3 "updated_at" = $4 where "id" = $5 returning "id"',
+            text: 'update users set "username" = $1, "password" = $2, "role" = $3, "updated_at" = $4 where "id" = $5 returning "id"',
             values: [username, hashedPassword, role, date, userId]
         }
 
