@@ -4,7 +4,6 @@ import { ReservasiService } from "./service";
 import { adminGuard } from "../../utils/adminGuard";
 
 export const reservasi = new Elysia({ prefix: '/reservasi' })
-    .use(adminGuard)
     .post(
         '/create',
         async ({ body }) => {
@@ -18,6 +17,7 @@ export const reservasi = new Elysia({ prefix: '/reservasi' })
         }
     }
     )
+    .use(adminGuard)
     .get(
         '/',
         async ({ auth }) => {

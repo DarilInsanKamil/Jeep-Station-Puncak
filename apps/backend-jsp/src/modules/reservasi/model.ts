@@ -23,14 +23,14 @@ export namespace ReservasiModel {
         t.Object({
             id: t.String(),
             kode_booking: t.String(),
-            tanggal_mulai: t.String(),
-            tanggal_selesai: t.String(),
+            tanggal_mulai: t.Date(),
+            tanggal_selesai: t.Date(),
             status_transaksi: t.String(),
             total_harga: t.Numeric(),
             jumlah_unit: t.Numeric(),
             nama_customer: t.String(),
             nama_armada: t.String(),
-            nama_bundle: t.String(),
+            nama_bundle: t.Optional(t.String()),
             created_at: t.Date(),
             updated_at: t.Date()
         })
@@ -40,17 +40,17 @@ export namespace ReservasiModel {
     export const ReservasiResponseById = t.Object({
         id: t.String(),
         kode_booking: t.String(),
-        durasi: t.String(),
+        durasi: t.Numeric(),
         minimal_dp: t.String(),
         sisa_pembayaran: t.String(),
-        tanggal_mulai: t.String(),
-        tanggal_selesai: t.String(),
+        tanggal_mulai: t.Date(),
+        tanggal_selesai: t.Date(),
         status_transaksi: t.String(),
         total_harga: t.Numeric(),
         jumlah_unit: t.Numeric(),
         nama_customer: t.String(),
         nama_armada: t.String(),
-        nama_bundle: t.String(),
+        nama_bundle: t.Optional(t.String()),
         created_at: t.Date(),
         updated_at: t.Date()
     })

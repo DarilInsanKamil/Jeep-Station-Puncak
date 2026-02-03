@@ -47,6 +47,8 @@ export namespace ArmadaModel {
             plat_nomor: t.String({ minLength: 1 }),
             kapasitas: t.Numeric(),
             deskripsi: t.String({ minLength: 1 }),
+            created_at: t.Date(),
+            updated_at: t.Date()
         })
     )
 

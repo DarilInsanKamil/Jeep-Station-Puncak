@@ -20,10 +20,14 @@ export const authentications = new Elysia({ prefix: '/auth' })
         '/login',
         async ({ body, jwt: jwtService, cookie: { accessToken, refreshToken } }) => {
             const id = await UserService.verifyUserCredential(body)
+            const user = await UserService.getUserById(id)
 
             const accessJWTToken = await jwtService.sign({
                 sub: id,
-                exp: '900s',
+                role: user.role,
+                username: user.username,
+                email: user.email,
+                exp: '900s'
             });
             const refreshJWTToken = await jwtService.sign({
                 sub: id,
@@ -88,6 +92,9 @@ export const authentications = new Elysia({ prefix: '/auth' })
 
             const accessJWTToken = await jwt.sign({
                 sub: userId,
+                role: user.role,
+                username: user.username,
+                email: user.email,
                 exp: '900s',
             });
 
