@@ -5,7 +5,6 @@
 </script>
 
 <main>
-
   <form method="POST" action="?/login">
     <label for="email"> Email: </label>
     <input
