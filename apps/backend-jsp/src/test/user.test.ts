@@ -10,7 +10,7 @@ describe('User Endpoint', () => {
 
     beforeAll(async () => {
         const { data, error } = await api.auth.login.post({
-            email: 'user-1770115580379@mail.com',
+            email: 'user-1770116099251@mail.com',
             password: '2132daril'
         })
 

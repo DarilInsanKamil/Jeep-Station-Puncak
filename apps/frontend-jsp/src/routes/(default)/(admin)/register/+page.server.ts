@@ -1,21 +1,17 @@
-import { fail, redirect, type Actions } from "@sveltejs/kit";
-import { client } from "../../../../lib/api";
+import { client } from '$lib/api'
+import { fail } from '@sveltejs/kit'
 
 export const actions = {
-    login: async ({ cookies, request }) => {
+    register: async ({ request }) => {
         const formData = await request.formData()
-
         const payload = {
             email: formData.get('email')?.toString() ?? '',
+            username: formData.get('username')?.toString() ?? '',
             password: formData.get('password')?.toString() ?? '',
-        };
-
-        const { data, error } = await client.auth.login.post(payload)
-
-        if (data) {
-            cookies.set('accessToken', data?.accessToken, { path: '/' })
-            cookies.set('refreshToken', data?.refreshToken, { path: '/' })
+            role: formData.get('role')?.toString() ?? 'admin',
         }
+
+        const { data, error } = await client.users.admin.register.post(payload)
 
         if (error) {
             const errorMessage = typeof error.value === 'string'
@@ -28,6 +24,5 @@ export const actions = {
                 values: payload
             });
         }
-        redirect(303, '/')
     }
-} satisfies Actions
+}

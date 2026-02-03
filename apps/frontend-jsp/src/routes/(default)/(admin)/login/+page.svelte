@@ -5,36 +5,23 @@
 </script>
 
 <main>
-  <!-- {#if form?.error}
-    <p style="color: red;">{form.message}</p>
-  {/if} -->
 
-  <form method="POST">
-    <label>
-      Username:
-      <input
-        type="username"
-        name="username"
-        value={form?.values.username ?? ""}
-      />
-    </label>
+  <form method="POST" action="?/login">
+    <label for="email"> Email: </label>
+    <input
+      type="email"
+      name="email"
+      value={form?.values.email ?? ""}
+      class="border"
+    />
 
-    <label>
-      Email:
-      <input type="email" name="email" value={form?.values.email ?? ""} />
-    </label>
-
-    <label>
-      Password:
-      <input
-        type="password"
-        name="password"
-        value={form?.values.password ?? ""}
-      />
-    </label>
+    <label for="password"> Password: </label>
+    <input
+      type="password"
+      name="password"
+      value={form?.values.password ?? ""}
+    />
 
     <button type="submit">Login</button>
   </form>
-
-  <!-- hello -->
 </main>

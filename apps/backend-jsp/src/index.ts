@@ -2,7 +2,7 @@ import { Elysia } from "elysia";
 import { users } from "./modules/user";
 import { logger } from "@bogeychan/elysia-logger";
 import staticPlugin from "@elysiajs/static";
-import { openapi } from '@elysiajs/openapi'
+import { fromTypes, openapi } from '@elysiajs/openapi'
 import { cors } from '@elysiajs/cors';
 import { authentications } from "./modules/auth";
 import { armada } from "./modules/armada";
@@ -23,6 +23,7 @@ const app = new Elysia()
     prefix: "/public"
   }))
   .use(openapi({
+    references: fromTypes(),
     documentation: {
       info: {
         title: 'Jeep Station Puncak API',

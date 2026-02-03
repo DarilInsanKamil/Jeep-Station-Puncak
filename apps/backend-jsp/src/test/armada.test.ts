@@ -11,33 +11,13 @@ describe('Armada Endpoint', () => {
 
     beforeAll(async () => {
         const { data, error } = await api.auth.login.post({
-            email: 'user-1770109550034@mail.com',
+            email: 'user-1770116099251@mail.com',
             password: '2132daril'
         })
 
         if (!error && data?.accessToken) {
             token = data.accessToken
         }
-    })
-
-    it('Berhasil mendapatkan semua armada', async () => {
-        const { data, error, status } = await api.armada.get()
-        expect(status).toBe(200)
-        expect(error).toBeNull()
-        expect(data).toBeDefined()
-    })
-
-    it('Berhasil mendapatkan armada dengan query parameter', async () => {
-        const { data, error, status } = await api.armada.get({
-            query: {
-                page: 1,
-                limit: 5,
-                kapasitas: 6
-            }
-        })
-        expect(status).toBe(200)
-        expect(error).toBeNull()
-        expect(data).toBeDefined()
     })
 
     it('Berhasil membuat armada baru', async () => {
@@ -70,6 +50,26 @@ describe('Armada Endpoint', () => {
         }
     })
 
+    it('Berhasil mendapatkan semua armada', async () => {
+        const { data, error, status } = await api.armada.get()
+        expect(status).toBe(200)
+        expect(error).toBeNull()
+        expect(data).toBeDefined()
+    })
+
+    it('Berhasil mendapatkan armada dengan query parameter', async () => {
+        const { data, error, status } = await api.armada.get({
+            query: {
+                page: 1,
+                limit: 5,
+                kapasitas: 6
+            }
+        })
+        expect(status).toBe(200)
+        expect(error).toBeNull()
+        expect(data).toBeDefined()
+    })
+
     it('Gagal membuat armada karena data invalid', async () => {
         const { data, error, status } = await api.armada.create.post({
             nama_armada: '',
@@ -87,7 +87,6 @@ describe('Armada Endpoint', () => {
 
     it('Berhasil mendapatkan armada by ID', async () => {
         if (!armadaId) {
-            // Skip if no armada created
             return
         }
         const { data, error, status } = await api.armada({ armadaId }).get()
