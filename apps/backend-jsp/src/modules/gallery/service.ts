@@ -18,9 +18,11 @@ export abstract class GalleryService {
             text: 'insert into gallery ("id", "deskripsi", "gambar_url") values ($1, $2, $3) returning "id"',
             values: [randomId, deskripsi, coverUrl]
         }
-        await pool.query(galleryQuery)
-
-        return coverUrl
+        const result = await pool.query(galleryQuery)
+        if (!result.rows.length) {
+            throw new GalleryError('Gagl menambah data gallery', 400)
+        }
+        return result.rows[0].id
     }
 
     static async getAllImageGallery(limit: number) {

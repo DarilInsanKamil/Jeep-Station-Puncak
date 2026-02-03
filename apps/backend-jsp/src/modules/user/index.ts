@@ -55,8 +55,8 @@ export const users = new Elysia({ prefix: '/users' })
     .use(authGuard)
     .patch(
         '/edit',
-        async ({ body, user }) => {
-            const userId = user.id;
+        async ({ body, auth }) => {
+            const userId = auth.id;
             const response = await UserService.editUser(userId, body)
             return status(200, {
                 message: 'Berhasil edit data user',

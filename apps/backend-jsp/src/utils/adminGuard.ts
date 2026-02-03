@@ -6,13 +6,13 @@ interface User {
 }
 export const adminGuard = new Elysia()
     .use(authGuard)
-    .derive(({ user, set }) => {
-        if (user.role !== 'admin') {
+    .derive(({ auth, set }) => {
+        if (auth.role !== 'admin') {
             set.status = 403;
             throw new Error('Forbidden: Access denied. Admins only.');
         }
         return {
-            user
+            auth
         };
     })
     .as('scoped')

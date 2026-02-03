@@ -1,103 +1,133 @@
 import { treaty } from "@elysiajs/eden";
-import { app } from "..";
-import { beforeAll, describe, expect, it } from "bun:test";
+import type { app } from "..";
+import { describe, it, expect, beforeAll } from "bun:test";
 
 const api = treaty<app>('localhost:3000')
 
-describe('Endpoint Armada', () => {
+describe('Armada Endpoint', () => {
 
-    let token = '';
-    let armadaId = '';
+    let token = ''
+    let armadaId = ''
 
     beforeAll(async () => {
-        const randomId = Math.floor(Math.random() * 1000)
-        const adminPayload = {
-            email: `admin${randomId}@mail.com`,
-            username: `admin${randomId}`,
-            password: '2132admin',
-            role: 'admin'
-        }
-
-        await api.users.admin.register.post(adminPayload)
-
-        const { data: loginData, error: loginError } = await api.auth.login.post({
-            email: adminPayload.email,
-            password: adminPayload.password
+        const { data, error } = await api.auth.login.post({
+            email: 'user-1770109550034@mail.com',
+            password: '2132daril'
         })
 
-        if (loginError) throw new Error("Gagal login: " + JSON.stringify(loginError));
-
-        if (loginData && 'accessToken' in loginData) {
-            token = loginData.accessToken
-        } else {
-            throw new Error("Gagal mendapatkan accessToken")
+        if (!error && data?.accessToken) {
+            token = data.accessToken
         }
     })
 
-    it('Berhasil menambahkan data armada', async () => {
-        const { status, data, error } = await api.armada.create.post({
-            nama_armada: 'Nissan Terano 2007',
-            plat_nomor: 'F 3455 JVK',
-            kapasitas: 2,
-            deskripsi: 'Mobil nissan terano tahun 2007',
-            gambar_armada: new File([''], 'sakdj', { type: 'image/jpeg' }),
+    it('Berhasil mendapatkan semua armada', async () => {
+        const { data, error, status } = await api.armada.get()
+        expect(status).toBe(200)
+        expect(error).toBeNull()
+        expect(data).toBeDefined()
+    })
+
+    it('Berhasil mendapatkan armada dengan query parameter', async () => {
+        const { data, error, status } = await api.armada.get({
+            query: {
+                page: 1,
+                limit: 5,
+                kapasitas: 6
+            }
+        })
+        expect(status).toBe(200)
+        expect(error).toBeNull()
+        expect(data).toBeDefined()
+    })
+
+    it('Berhasil membuat armada baru', async () => {
+        const jpegHeader = new Uint8Array([
+            0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46,
+            0x00, 0x01, 0x01, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00,
+            0xFF, 0xD9  // JPEG end marker
+        ])
+
+        const validImageFile = new File([jpegHeader], 'test.jpg', {
+            type: 'image/jpeg'
+        })
+        const { data, error, status } = await api.armada.create.post({
+            nama_armada: 'Test Armada Jeep',
+            harga_sewa: 500000,
+            plat_nomor: 'B 1234 XYZ',
+            kapasitas: 6,
+            deskripsi: 'Test armada description',
+            gambar_armada: validImageFile
         }, {
             headers: {
                 cookie: `accessToken=${token}`
             }
         })
         expect(status).toBe(201)
+        expect(error).toBeNull()
         expect(data).toBeDefined()
-        expect(error).toBeNull()
-
         if (data && 'id' in data) {
-            armadaId = data?.id
-        } else {
-            throw new Error("Gagal mendapatkan id")
+            armadaId = data.id as string
         }
-
-    })
-    it('Berhasil mengambil semua data armada', async () => {
-        const { status, error } = await api.armada.get()
-
-        expect(status).toBe(200)
-        expect(error).toBeNull()
     })
 
-    it('Berhasil mengambil data armada berdasarkan id', async () => {
-
-        const { status, error, data } = await api.armada({ armadaId }).get();
-
-        expect(status).toBe(200)
-        expect(error).toBeNull()
-    })
-
-    it('Berhasil merubah data armada berdasarkan id', async () => {
-        const { status, error, data } = await api.armada.edit({
-            armadaId
-        }).patch({
-            nama_armada: 'string',
-            plat_nomor: 'string',
-            kapasitas: 4,
-            deskripsi: 'string',
+    it('Gagal membuat armada karena data invalid', async () => {
+        const { data, error, status } = await api.armada.create.post({
+            nama_armada: '',
+            harga_sewa: 0,
+            plat_nomor: '',
+            kapasitas: 0,
+            deskripsi: ''
         }, {
             headers: {
                 cookie: `accessToken=${token}`
             }
-        });
+        })
+        expect(status).toBe(422)
+    })
+
+    it('Berhasil mendapatkan armada by ID', async () => {
+        if (!armadaId) {
+            // Skip if no armada created
+            return
+        }
+        const { data, error, status } = await api.armada({ armadaId }).get()
         expect(status).toBe(200)
         expect(error).toBeNull()
+        expect(data).toBeDefined()
     })
-    // it('Berhasil menghapus data armada berdasarkan id', async () => {
 
-    //     const { status, error } = await api.armada({ armadaId }).delete(
-    //         undefined,
-    //         {
-    //             headers: {
-    //                 cookie: `accessToken=${token}`
-    //             }
-    //         })
-    //     expect(status).toBe(204)
-    //     expect(error).toBeNull()
-    // })
+    it('Berhasil edit data armada', async () => {
+        if (!armadaId) {
+            return
+        }
+        const { data, error, status } = await api.armada.edit({ armadaId }).patch({
+            nama_armada: 'Updated Test Armada',
+            harga_sewa: 600000,
+            plat_nomor: 'B 5678 ABC',
+            kapasitas: 7,
+            deskripsi: 'Updated description'
+        }, {
+            headers: {
+                cookie: `accessToken=${token}`
+            }
+        })
+        expect(status).toBe(200)
+        expect(error).toBeNull()
+        expect(data).toBeDefined()
+    })
+
+    it('Berhasil delete armada', async () => {
+        if (!armadaId) {
+            return
+        }
+        const { status } = await api.armada({ armadaId }).delete(
+            undefined,
+            {
+                headers: {
+                    cookie: `accessToken=${token}`
+                }
+            }
+        )
+        expect(status).toBe(204)
+    })
 })

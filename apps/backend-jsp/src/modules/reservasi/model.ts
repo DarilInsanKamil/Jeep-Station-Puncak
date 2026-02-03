@@ -18,4 +18,54 @@ export namespace ReservasiModel {
         })
     })
     export type ReservasiPayload = typeof ReservasiPayload.static
+
+    export const ReservasiResponse = t.Array(
+        t.Object({
+            id: t.String(),
+            kode_booking: t.String(),
+            tanggal_mulai: t.Date(),
+            tanggal_selesai: t.Date(),
+            status_transaksi: t.String(),
+            total_harga: t.Numeric(),
+            jumlah_unit: t.Numeric(),
+            nama_customer: t.String(),
+            nama_armada: t.String(),
+            nama_bundle:  t.Union([t.String(), t.Null()]),
+            created_at: t.Date(),
+            updated_at: t.Date()
+        })
+    )
+    export type ReservasiResponse = typeof ReservasiResponse.static
+
+    export const ReservasiResponseById = t.Object({
+        id: t.String(),
+        kode_booking: t.String(),
+        durasi: t.Numeric(),
+        minimal_dp: t.String(),
+        sisa_pembayaran: t.String(),
+        tanggal_mulai: t.Date(),
+        tanggal_selesai: t.Date(),
+        status_transaksi: t.String(),
+        total_harga: t.Numeric(),
+        jumlah_unit: t.Numeric(),
+        nama_customer: t.String(),
+        nama_armada: t.String(),
+        nama_bundle:  t.Union([t.String(), t.Null()]),
+        created_at: t.Date(),
+        updated_at: t.Date()
+    })
+
+    export type ReservasiResponseById = typeof ReservasiResponseById.static
+
+    export const ReservasiSuccess = t.Object({
+        message: t.String({ minLength: 1 }),
+        id: t.String({ minLength: 1 })
+    })
+    export type ReservasiSuccess = typeof ReservasiSuccess.static;
+
+    export const ErrorResponse = t.Object({
+        success: t.Boolean(),
+        message: t.String()
+    })
+    export type ErrorResponse = typeof ErrorResponse.static
 }

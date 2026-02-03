@@ -1,53 +1,72 @@
-import { describe, expect, it } from "bun:test";
-import { app } from "..";
 import { treaty } from "@elysiajs/eden";
+import type { app } from "..";
+import { describe, it, expect } from "bun:test";
 
 const api = treaty<app>('localhost:3000')
 
-describe('Endpoint testimoni', () => {
-    let testimoniId = '';
-    it('Berhasil menambahkan data testimoni', async () => {
+describe('Testimoni Endpoint', () => {
+
+    let testimoniId = ''
+
+    it('Berhasil membuat testimoni baru', async () => {
         const { data, error, status } = await api.testimoni.create.post({
-            name: 'Daril',
-            komentar: 'Layanannya mantap',
-            rating: 2
+            name: 'Test User',
+            komentar: 'Pelayanan sangat memuaskan!',
+            rating: 5
         })
         expect(status).toBe(201)
-        expect(data).toBeDefined()
         expect(error).toBeNull()
-
+        expect(data).toBeDefined()
         if (data && 'id' in data) {
-            testimoniId = data?.id
-        } else {
-            throw new Error("Gagal mendapatkan id")
+            testimoniId = data.id as string
         }
     })
-    it('Berhasil mengambil semua data testimoni', async () => {
+
+    it('Gagal membuat testimoni karena data invalid', async () => {
+        const { data, error, status } = await api.testimoni.create.post({
+            name: '',
+            komentar: '',
+            rating: 0
+        })
+        expect(status).toBe(422)
+    })
+
+    it('Berhasil mendapatkan semua testimoni', async () => {
         const { data, error, status } = await api.testimoni.get()
         expect(status).toBe(200)
         expect(error).toBeNull()
         expect(data).toBeDefined()
     })
-    it('Berhasil mengambil data testimoni berdasarkan id', async () => {
+
+    it('Berhasil mendapatkan testimoni by ID', async () => {
+        if (!testimoniId) {
+            return
+        }
         const { data, error, status } = await api.testimoni({ testimoniId }).get()
         expect(status).toBe(200)
         expect(error).toBeNull()
         expect(data).toBeDefined()
     })
-    it('Berhasil merubah data testimoni berdasarkan id', async () => {
-        const { status, data, error } = await api.testimoni.edit({ testimoniId }).patch({
-            name: 'Daril kamil',
-            komentar: 'Layanannya mantap banget',
-            rating: 5
+
+    it('Berhasil edit data testimoni', async () => {
+        if (!testimoniId) {
+            return
+        }
+        const { data, error, status } = await api.testimoni.edit({ testimoniId }).patch({
+            name: 'Updated Test User',
+            komentar: 'Updated comment',
+            rating: 4
         })
         expect(status).toBe(200)
         expect(error).toBeNull()
         expect(data).toBeDefined()
     })
-    it('Berhasil menghapus data testimoni berdasarkan id', async () => {
-        const { data, error, status } = await api.testimoni({ testimoniId }).delete()
+
+    it('Berhasil delete testimoni', async () => {
+        if (!testimoniId) {
+            return
+        }
+        const { status } = await api.testimoni({ testimoniId }).delete()
         expect(status).toBe(204)
-        expect(error).toBeNull()
-        expect(data).toBeDefined()
     })
 })

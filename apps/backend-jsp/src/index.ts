@@ -22,7 +22,28 @@ const app = new Elysia()
     assets: "public",
     prefix: "/public"
   }))
-  .use(openapi())
+  .use(openapi({
+    documentation: {
+      info: {
+        title: 'Jeep Station Puncak API',
+        version: '1.0.0'
+      },
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT'
+          }
+        }
+      },
+      security: [
+        {
+          bearerAuth: []
+        }
+      ]
+    }
+  }))
   .use(cors({
     origin: '*'
   }))
