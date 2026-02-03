@@ -80,13 +80,47 @@ export abstract class ArmadaService {
         return result.rows[0]
     }
 
-    static async editArmadaById({ nama_armada, plat_nomor, kapasitas, deskripsi, harga_sewa }: ArmadaModel.ArmadaPayload, armadaId: string) {
-        await this.getArmadaById(armadaId)
+    static async editArmadaById({ nama_armada, plat_nomor, kapasitas, deskripsi, harga_sewa, gambar_armada }: ArmadaModel.ArmadaPayload, armadaId: string) {
+      const oldData = await this.getArmadaById(armadaId)
 
-        const updated_at = new Date().toISOString()
+      let coverUrl = oldData.gambar_armada;
+          const updated_at = new Date().toISOString();
+
+              // A. HAPUS GAMBAR LAMA (Cleanup)
+              if (oldData.gambar_armada) {
+                  // Sesuaikan path (hilangkan '/' di depan jika formatnya '/public/...')
+                  const oldPath = oldData.gambar_armada.startsWith('/')
+                      ? oldData.gambar_armada.slice(1)
+                      : oldData.gambar_armada;
+
+                  try {
+                      const file = Bun.file(oldPath);
+                      // Cek apakah file fisik benar-benar ada sebelum delete
+                      if (await file.exists()) {
+                          await unlink(oldPath);
+                          console.log(`[File Deleted] Gambar lama dihapus: ${oldPath}`);
+                      }
+                  } catch (err) {
+                      console.error(`Gagal menghapus file lama: ${oldPath}`, err);
+                      // Lanjut saja, jangan throw error agar update data tetap jalan
+                  }
+              }
+
+
+      if (!gambar_armada) {
+          throw new ArmadaError('Gambar armada is required', 400)
+      }
+      const id = `armada-${nanoid(16)}`
+      const fileName = `${id}-${Date.now()}.${gambar_armada.type.split('/')[1]}`
+      const path = `public/cars/${fileName}`
+
+      await Bun.write(path, gambar_armada)
+
+      coverUrl = `/public/cars/${fileName}`
+
         const armadaQuery = {
-            text: 'update armada set "nama_armada" = $1, "plat_nomor" = $2, "kapasitas" = $3, "deskripsi" = $4, "updated_at" = $5, "harga_sewa" = $6  where "id" = $7 returning id',
-            values: [nama_armada, plat_nomor, kapasitas, deskripsi, updated_at, harga_sewa, armadaId]
+            text: 'update armada set "nama_armada" = $1, "plat_nomor" = $2, "kapasitas" = $3, "deskripsi" = $4, "updated_at" = $5, "harga_sewa" = $6, "gambar_armada" = $7  where "id" = $8 returning id',
+            values: [nama_armada, plat_nomor, kapasitas, deskripsi, updated_at, harga_sewa, coverUrl, armadaId]
         }
         const result = await pool.query(armadaQuery)
         if (!result.rows.length) {
@@ -143,4 +177,3 @@ export abstract class ArmadaService {
         return coverUrl
     }
 }
-

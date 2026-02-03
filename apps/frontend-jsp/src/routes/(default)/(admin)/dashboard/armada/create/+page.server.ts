@@ -4,7 +4,6 @@ import { fail, type Actions } from '@sveltejs/kit';
 
 export const actions = {
   create: async ({ cookies, request }) => {
-    const token = cookies.get('accessToken') ?? '';
     const formData = await request.formData()
 
     const gambarFile = formData.get('gambar_armada') as File;

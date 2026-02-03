@@ -7,6 +7,7 @@
 <!-- Contoh menampilkan data -->
 <ul>
   {#each data?.data as item}
+    <li>{item?.id}</li>
     <li>{item?.nama_armada}</li>
   {/each}
 </ul>
