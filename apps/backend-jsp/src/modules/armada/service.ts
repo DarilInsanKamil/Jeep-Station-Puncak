@@ -61,9 +61,9 @@ export abstract class ArmadaService {
             values: values
         });
 
-        if (!result.rows.length) {
-            throw new ArmadaError('Gagal mengambil data armada', 404)
-        }
+        // if (!result.rows.length) {
+        //     throw new ArmadaError('Gagal mengambil data armada', 404)
+        // }
 
         return result.rows
     }
