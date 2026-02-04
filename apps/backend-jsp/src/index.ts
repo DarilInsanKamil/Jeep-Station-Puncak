@@ -23,7 +23,6 @@ const app = new Elysia()
     prefix: "/public"
   }))
   .use(openapi({
-    references: fromTypes(),
     documentation: {
       info: {
         title: 'Jeep Station Puncak API',

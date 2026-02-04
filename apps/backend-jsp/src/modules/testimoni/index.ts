@@ -2,6 +2,7 @@ import Elysia, { status } from "elysia";
 import { TestimoniService } from "./service";
 import { TestimoniModel } from "./model";
 import { TestimoniError } from "../../errors/testimoniError";
+import { adminGuard } from "../../utils/adminGuard";
 
 export const testimoni = new Elysia({ prefix: '/testimoni' })
     .error({ TESTIMONI_ERROR: TestimoniError })
@@ -63,7 +64,8 @@ export const testimoni = new Elysia({ prefix: '/testimoni' })
             404: TestimoniModel.ErrorResponse,
         }
     }
-    )
+)
+    .use(adminGuard)
     .patch(
         '/edit/:testimoniId',
         async ({ body, params }) => {

@@ -21,9 +21,7 @@ export abstract class TestimoniService {
             text: 'select * from testimoni'
         }
         const result = await pool.query(testiQuery)
-        if (!result.rows.length) {
-            throw new TestimoniError('Gagal mengambil data testimoni', 400)
-        }
+
         return result.rows
     }
     static async getTestimoniById(testimoniId: string) {
