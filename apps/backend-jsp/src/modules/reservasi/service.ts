@@ -12,8 +12,8 @@ export abstract class ReservasiService {
         const totalStokFisik = parseInt(totalArmadaRes.rows[0].total);
         const terpakaiQuery = {
             text: `
-            SELECT SUM(COALESCE(jumlah_unit, 1)) as total_terpakai 
-            FROM reservasi 
+            SELECT SUM(COALESCE(jumlah_unit, 1)) as total_terpakai
+            FROM reservasi
             WHERE status_transaksi != 'dibatalkan'
             AND (
                 (tanggal_mulai <= $1 AND tanggal_selesai >= $1) OR
@@ -33,8 +33,8 @@ export abstract class ReservasiService {
         if (armadaId) {
             const query = {
                 text: `
-                SELECT id FROM reservasi 
-                WHERE armada_id = $1 
+                SELECT id FROM reservasi
+                WHERE armada_id = $1
                 AND status_transaksi != 'dibatalkan'
                 AND (
                     (tanggal_mulai <= $2 AND tanggal_selesai >= $2) OR
@@ -50,7 +50,6 @@ export abstract class ReservasiService {
             }
         }
         return true
-
     }
     static async addReservasi(payload: ReservasiModel.ReservasiPayload) {
         const client = await pool.connect()
@@ -85,9 +84,9 @@ export abstract class ReservasiService {
 
             const pembayaranId = `pay-${nanoid(16)}`
             await client.query({
-                text: `INSERT INTO pembayaran 
+                text: `INSERT INTO pembayaran
            ("id", "reservasi_id", "metode_pembayaran", "nominal", "jenis_pembayaran")
-           VALUES ($1, $2, $3, $4, $5) 
+           VALUES ($1, $2, $3, $4, $5)
            RETURNING id`,
                 values: [
                     pembayaranId,
@@ -117,7 +116,7 @@ export abstract class ReservasiService {
 
         if (userRole == 'admin') {
             const reservasiQuery = {
-                text: `select r.id, r.kode_booking, r.tanggal_mulai, r.tanggal_selesai, 
+                text: `select r.id, r.kode_booking, r.tanggal_mulai, r.tanggal_selesai,
                 r.status_transaksi, r.total_harga, r.jumlah_unit, r.created_at, r.updated_at, c.nama_lengkap as nama_customer, a.nama_armada,
                 b.title as nama_bundle from reservasi r join customers c on r.customer_id = c.id left join armada
                 a on r.armada_id = a.id left join bundles b on r.bundle_id = b.id where c.nama_lengkap ilike $1 or r.kode_booking = $1
@@ -130,8 +129,8 @@ export abstract class ReservasiService {
     }
     static async getReservasiById(reservasiId: string) {
         const reservasiQuery = {
-            text: `SELECT 
-                r.*, 
+            text: `SELECT
+                r.*,
                 c.nama_lengkap, c.email, c.no_hp, c.alamat,
                 a.nama_armada, a.plat_nomor, a.gambar_armada,
                 b.title as nama_bundle, b.deskripsi as deskripsi_bundle

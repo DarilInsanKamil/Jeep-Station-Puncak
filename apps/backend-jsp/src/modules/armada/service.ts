@@ -105,8 +105,6 @@ export abstract class ArmadaService {
                       // Lanjut saja, jangan throw error agar update data tetap jalan
                   }
               }
-
-
       if (!gambar_armada) {
           throw new ArmadaError('Gambar armada is required', 400)
       }
@@ -176,4 +174,17 @@ export abstract class ArmadaService {
 
         return coverUrl
     }
+
+  static async checkKetersediaanArmada(payload: ArmadaModel.CheckAvailPayload) {
+    const { kapasitas = 2, tglMulai, tglSelesai} = payload
+    const armadaQuery = {
+      text: `
+      select a.* from armada a where a.id not in (select r.armada_id from reservasi r where r.status_transaksi != 'dibatalkan'
+      and (r.tanggal_mulai::date <= $2::date and r.tanggal_selesai::date >= $1::date)) and a.kapasitas >=$3
+      `,
+      values: [tglMulai, tglSelesai, kapasitas]
+    }
+    const result = await pool.query(armadaQuery)
+    return result.rows
+  }
 }

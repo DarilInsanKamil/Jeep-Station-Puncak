@@ -24,7 +24,24 @@ export const reservasi = new Elysia({ prefix: '/reservasi' })
             tags: ["Reservasi"]
         }
     }
-    )
+)
+.get(
+    '/:reservasiId',
+    async ({ params }) => {
+        const reservasiId = params.reservasiId
+        const response = await ReservasiService.getReservasiById(reservasiId)
+        return status(200, response)
+    }, {
+    response: {
+        200: ReservasiModel.ReservasiResponseById,
+        400: ReservasiModel.ErrorResponse
+    },
+    detail: {
+        summary: 'GET reservasi by Id',
+        tags: ['Reservasi']
+    }
+}
+)
     .use(adminGuard)
     .get(
         '/',
@@ -40,23 +57,6 @@ export const reservasi = new Elysia({ prefix: '/reservasi' })
         response: {
             200: ReservasiModel.ReservasiResponse,
             400: ReservasiModel.ErrorResponse
-        }
-    }
-    )
-    .get(
-        '/:reservasiId',
-        async ({ params }) => {
-            const reservasiId = params.reservasiId
-            const response = await ReservasiService.getReservasiById(reservasiId)
-            return status(200, response)
-        }, {
-        response: {
-            200: ReservasiModel.ReservasiResponseById,
-            400: ReservasiModel.ErrorResponse
-        },
-        detail: {
-            summary: 'GET reservasi by Id',
-            tags: ['Reservasi']
         }
     }
     )

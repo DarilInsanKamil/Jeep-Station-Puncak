@@ -38,6 +38,13 @@ export namespace ArmadaModel {
     })
     export type ArmadaResponseId = typeof ArmadaResponseId.static;
 
+    export const CheckAvailPayload = t.Object({
+      kapasitas: t.Optional(t.Numeric()),
+      tglMulai: t.String(),
+      tglSelesai: t.String(),
+      })
+    export type CheckAvailPayload = typeof CheckAvailPayload.static
+
     export const ArmadaResponse = t.Array(
         t.Object({
             id: t.String({ minLength: 1 }),
