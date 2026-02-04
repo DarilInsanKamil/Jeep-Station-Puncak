@@ -1,11 +1,24 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import type { PageProps } from './$types';
   import CardListArmada from '../../../../../components/CardListArmada.svelte';
 
-  let { data } = $props();
+  let { data, form }: PageProps = $props();
 </script>
 
 <h1>Daftar Armada</h1>
+
+<div>
+    <form action="?search">
+<input
+    type="text"
+    placeholder="search"
+    name='search'
+    value={data.searchParams.search}
+>
+<button>Search</button>
+    </form>
+</div>
 
 <ul>
    {#each data?.data as item (item.id)}

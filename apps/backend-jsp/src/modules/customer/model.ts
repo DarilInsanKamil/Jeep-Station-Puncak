@@ -8,15 +8,18 @@ export namespace CustomerModel {
     })
     export type CustomerPayload = typeof CustomerPayload.static
 
-    export const CustomerResponseById = t.Object({
+  export const CustomerResponseById = t.Object({
+        id: t.String({minLength: 1}),
         nama_lengkap: t.String({ minLength: 1 }),
         email: t.String({ minLength: 1, format: 'email' }),
         no_hp: t.String({ minLength: 1 }),
         alamat: t.String({ minLength: 1 }),
         created_at: t.Date(),
-        updated_at: t.Date()
     })
-    export type CustomerResponseById = typeof CustomerResponseById.static
+  export type CustomerResponseById = typeof CustomerResponseById.static
+
+    export const CustomResponse = t.Array(CustomerResponseById)
+    export type CustomResponse = typeof CustomResponse.static
 
     export const GetCustomerQuery = t.Object({
         page: t.Optional(t.Numeric({ default: 1 })),

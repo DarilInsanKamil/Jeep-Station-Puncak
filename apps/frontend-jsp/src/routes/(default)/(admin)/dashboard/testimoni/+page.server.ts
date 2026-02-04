@@ -24,10 +24,10 @@ export const actions = {
 
 export const load: PageServerLoad = async () => {
   const { data, error } = await client.testimoni.get()
-    if (error) {
-      console.error('Gagal load testimoni:', error);
-    }
+  if (error) {
+    console.error('Gagal load testimoni:', error);
+  }
   return {
-      data: data ?? [],
-    }
+    data: data ?? [],
+  }
 }
