@@ -31,9 +31,7 @@ export abstract class GalleryService {
             values: [limit]
         }
         const result = await pool.query(galleryQuery)
-        if (!result.rows.length) {
-            throw new GalleryError('Gagal mengambil gambar', 400)
-        }
+
         return result.rows
     }
 

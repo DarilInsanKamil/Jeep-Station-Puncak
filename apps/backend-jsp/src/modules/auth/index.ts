@@ -120,7 +120,9 @@ export const authentications = new Elysia({ prefix: '/auth' })
             });
 
             return status(200, {
-                message: 'access token berhasil di generate ulang'
+                message: 'access token berhasil di generate ulang',
+                accessToken: accessJWTToken,
+                refreshToken: refreshJWTToken
             })
         }, {
         detail: {

@@ -12,9 +12,22 @@ export const actions = {
 
         const { data, error } = await client.auth.login.post(payload)
 
-        if (data) {
-            cookies.set('accessToken', data?.accessToken, { path: '/' })
-            cookies.set('refreshToken', data?.refreshToken, { path: '/' })
+        if (data?.accessToken && data?.refreshToken) {
+            // 1. Set Access Token (Umur pendek, misal 15 menit)
+            cookies.set('accessToken', data.accessToken, {
+                path: '/',
+                httpOnly: true,
+                maxAge: 60 * 15,
+                secure: process.env.NODE_ENV === 'production'
+            });
+
+            // 2. Set Refresh Token (Umur panjang, misal 7 hari)
+            cookies.set('refreshToken', data.refreshToken, {
+                path: '/',
+                httpOnly: true,
+                maxAge: 60 * 60 * 24 * 7,
+                secure: process.env.NODE_ENV === 'production'
+            });
         }
 
         if (error) {
