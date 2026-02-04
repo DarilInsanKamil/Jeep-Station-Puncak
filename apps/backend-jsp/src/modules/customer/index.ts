@@ -37,7 +37,11 @@ export const customer = new Elysia({ prefix: '/customer' })
             const response = await CustomerService.getCustomer(query)
             return status(200, response)
         }, {
-        query: CustomerModel.GetCustomerQuery,
+          query: CustomerModel.GetCustomerQuery,
+          response: {
+            200: CustomerModel.CustomResponse,
+            400: CustomerModel.ErrorResponse
+          },
         detail: {
             summary: 'Get Customer',
             tags: ['Customer']

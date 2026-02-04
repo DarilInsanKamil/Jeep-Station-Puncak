@@ -2,7 +2,7 @@ import { client } from "$lib/api";
 import { fail, type Actions } from "@sveltejs/kit";
 
 export const actions = {
-  create: async ({request}) => {
+  create: async ({ request }) => {
     const formData = await request.formData()
 
     const name = formData.get('name')?.toString() ?? '';
@@ -17,6 +17,7 @@ export const actions = {
       return fail(error.status ?? 400, {
         error: true,
         message: typeof error.value === 'object' ? (error.value as any).message : error.value,
+        values: payload
       });
     }
 

@@ -26,6 +26,19 @@ export const armada = new Elysia({ prefix: '/armada' })
             400: ArmadaModel.ErrorResponse
         }
     })
+    .get(
+    '/tersedia',
+      async ({ query }) => {
+        const response = await ArmadaService.checkKetersediaanArmada(query)
+        return status(200, response ?? [])
+    }, {
+      query: ArmadaModel.CheckAvailPayload,
+      detail: {
+        summary: 'GET check reservasi',
+        tags: ["Armada"]
+      },
+    }
+    )
     .get('/:armadaId', async ({ params }) => {
         const armadaId = params.armadaId;
         const response = await ArmadaService.getArmadaById(armadaId);

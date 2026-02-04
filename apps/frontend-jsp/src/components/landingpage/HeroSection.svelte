@@ -1,7 +1,47 @@
 <script lang="ts">
   import background from "$lib/assets/background.png?enhanced";
   import Button from "$lib/components/ui/button/button.svelte";
+  import { getLocalTimeZone, today } from "@internationalized/date";
   import DateRangePicker from "../DateRangePicker.svelte";
+  import { client } from "$lib/api";
+  import { redirect } from "@sveltejs/kit";
+
+
+    let bookingDate = $state({
+        start: today(getLocalTimeZone()),
+        end: today(getLocalTimeZone()).add({ days: 1 }),
+    });
+
+
+  // const handleKetersediaan = async () => {
+  //   if(!bookingDate.start && !bookingDate.end) {
+  //     alert('Pilih tanggal')
+  //     return
+  //   }
+
+  //   const tglMulai = bookingDate.start.toString()
+  //   const tglSelesai = bookingDate.end.toString()
+  //   const payload = {
+  //     kapasitas: 2,
+  //     tglMulai,
+  //     tglSelesai
+  //   }
+  //   console.log(payload)
+  //   const {data, error} = await client.armada.tersedia.get({
+  //     query: {
+  //       kapasitas: 2,
+  //       tglMulai,
+  //       tglSelesai
+  //     }
+  //   })
+
+  //   if(error) {
+  //     console.error('Gagal memuat data: ', error)
+  //   }
+  //   return {
+  //    data: data ?? []
+  //   }
+  // }
 </script>
 
 <section class="relative w-full font-sans">
@@ -24,10 +64,7 @@
       </h1>
       <div class="rounded-lg bg-white p-6">
         <div>
-          <form
-            action=""
-            class="grid grid-cols-1 gap-4 md:grid-cols-3 items-end"
-          >
+          <form action="/list-armada/tersedia" method="GET" class="grid grid-cols-1 gap-4 md:grid-cols-3 items-end">
             <div>
               <label for="" class="text-sm">Lokasi Penjemputan</label>
               <br />
@@ -39,9 +76,15 @@
             </div>
             <div>
               <label for="" class="text-sm">Tanggal Pengambilan</label>
-              <DateRangePicker />
+
+              <DateRangePicker bind:value={bookingDate} />
+
             </div>
-            <Button variant="default" size="sm">Submit</Button>
+
+              <input type="hidden" name="tglMulai" value={bookingDate.start?.toString()} />
+              <input type="hidden" name="tglSelesai" value={bookingDate.end?.toString()} />
+
+              <Button type="submit">Cari Jeep</Button>
           </form>
         </div>
       </div>

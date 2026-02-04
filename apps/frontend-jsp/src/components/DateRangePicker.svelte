@@ -10,15 +10,30 @@
   import { Button } from "$lib/components/ui/button";
   import { RangeCalendar } from "$lib/components/ui/range-calendar";
   import * as Popover from "$lib/components/ui/popover";
+  import type { DateRange } from "bits-ui";
 
   const df = new DateFormatter("id-ID", {
     dateStyle: "medium",
   });
 
-  let value = $state({
-    start: today(getLocalTimeZone()),
-    end: today(getLocalTimeZone()).add({ days: 2 }),
-  });
+  // let value = $state({
+  //   start: today(getLocalTimeZone()),
+  //   end: today(getLocalTimeZone()).add({ days: 2 }),
+  // });
+
+  // let {value = $bindable()} = $props<{value: DateRange | undefined}>()
+
+  // let { value = $bindable({
+  //     start: today(getLocalTimeZone()),
+  //     end: today(getLocalTimeZone()).add({ days: 2 }),
+  //   }) } = $props<{
+  //     value?: DateRange
+  //   }>();
+  //
+  let { value = $bindable() } = $props<{
+      value?: DateRange
+    }>();
+
 
   // Tambahkan fungsi ini untuk menghitung durasi
   function getDaysDuration(start: DateValue, end: DateValue) {

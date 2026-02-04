@@ -32,7 +32,6 @@ export const actions = {
 } satisfies Actions
 
 export const load: PageServerLoad = async ({ url, cookies }) => {
-
   const search = url.searchParams.get('search') ?? '';
   const page = Number(url.searchParams.get('page') ?? '1');
   const limit = Number(url.searchParams.get('limit') ?? '10');
@@ -46,15 +45,15 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
       kapasitas,
     }
   })
-  const token = cookies.get('accessToken') ?? null;
+
 
   if (error) {
     console.error('Gagal load armada:', error);
   }
 
   return {
-    token,
     data: data ?? [],
+    searchParams: { search },
     meta: {
       page,
       limit
