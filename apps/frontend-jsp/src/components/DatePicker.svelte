@@ -38,40 +38,5 @@
 </script>
 
 <div class="grid gap-2">
-  <Popover.Root>
-    <Popover.Trigger>
-      {#snippet child({ props })}
-        <Button
-          variant="outline"
-          class={cn(
-            "w-['300px'] justify-start text-left font-normal ",
-            !value && "text-muted-foreground",
-          )}
-          {...props}
-        >
-          <CalendarIcon class="mr-2 h-4 w-4" />
-          {#if value && value.start}
-            {#if value.end}
-              <p>
-                {df.format(value.start.toDate(getLocalTimeZone()))}
-              </p>
-              <p class="bg-blue-200 p-2 rounded-md">
-                {getDaysDuration(value.start, value.end)} Hari
-              </p>
-              <p>
-                {df.format(value.end.toDate(getLocalTimeZone()))}
-              </p>
-            {:else}
-              {df.format(value.start.toDate(getLocalTimeZone()))}
-            {/if}
-          {:else}
-            Pilih Tanggal
-          {/if}
-        </Button>
-      {/snippet}
-    </Popover.Trigger>
-    <Popover.Content class="w-auto p-0" align="start">
       <RangeCalendar bind:value numberOfMonths={2} placeholder={value?.start} />
-    </Popover.Content>
-  </Popover.Root>
 </div>
