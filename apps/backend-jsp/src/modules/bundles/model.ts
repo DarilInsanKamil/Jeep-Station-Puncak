@@ -26,6 +26,7 @@ export namespace BundlesModel {
             jumlah_unit: t.Numeric(),
             gambar_bundles: t.String(),
             is_active: t.Boolean(),
+            addOns: t.Array(t.String()),
             created_at: t.Date(),
             updated_at: t.Date()
         })
@@ -40,6 +41,7 @@ export namespace BundlesModel {
         jumlah_unit: t.Numeric(),
         gambar_bundles: t.String(),
         is_active: t.Boolean(),
+        addOns: t.Array(t.String()),
         created_at: t.Date(),
         updated_at: t.Date()
     })

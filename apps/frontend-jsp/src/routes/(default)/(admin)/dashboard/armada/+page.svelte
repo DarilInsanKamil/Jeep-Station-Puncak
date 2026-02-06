@@ -22,7 +22,8 @@
 
 <ul>
    {#each data?.data as item (item.id)}
-      <CardListArmada id={item.id}
+      <CardListArmada
+          id={item.id}
           nama_armada={item.nama_armada}
           kapasitas={item.kapasitas}
           plat_nomor={item.plat_nomor}
