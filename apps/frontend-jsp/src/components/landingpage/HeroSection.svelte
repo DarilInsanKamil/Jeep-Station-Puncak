@@ -3,45 +3,12 @@
   import Button from "$lib/components/ui/button/button.svelte";
   import { getLocalTimeZone, today } from "@internationalized/date";
   import DateRangePicker from "../DateRangePicker.svelte";
-  import { client } from "$lib/api";
-  import { redirect } from "@sveltejs/kit";
-
 
     let bookingDate = $state({
         start: today(getLocalTimeZone()),
         end: today(getLocalTimeZone()).add({ days: 1 }),
     });
 
-
-  // const handleKetersediaan = async () => {
-  //   if(!bookingDate.start && !bookingDate.end) {
-  //     alert('Pilih tanggal')
-  //     return
-  //   }
-
-  //   const tglMulai = bookingDate.start.toString()
-  //   const tglSelesai = bookingDate.end.toString()
-  //   const payload = {
-  //     kapasitas: 2,
-  //     tglMulai,
-  //     tglSelesai
-  //   }
-  //   console.log(payload)
-  //   const {data, error} = await client.armada.tersedia.get({
-  //     query: {
-  //       kapasitas: 2,
-  //       tglMulai,
-  //       tglSelesai
-  //     }
-  //   })
-
-  //   if(error) {
-  //     console.error('Gagal memuat data: ', error)
-  //   }
-  //   return {
-  //    data: data ?? []
-  //   }
-  // }
 </script>
 
 <section class="relative w-full font-sans">
@@ -91,7 +58,3 @@
     </div>
   </div>
 </section>
-
-<style>
-  /* Tambahkan font custom jika diperlukan di sini */
-</style>
