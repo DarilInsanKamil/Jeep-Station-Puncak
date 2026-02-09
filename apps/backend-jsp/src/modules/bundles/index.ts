@@ -1,17 +1,34 @@
 import Elysia, { status, t } from "elysia";
 import { BundlesService } from "./service";
 import { BundlesModel } from "./model";
+import { redis } from "bun";
 
 export const bundles = new Elysia({ prefix: '/bundles' })
     .post(
         '/create',
         async ({ body }) => {
             const response = await BundlesService.addBundles(body)
+
+            const cacheKey = `bundles`
+            await redis.del(cacheKey)
+
             return status(201, {
                 message: 'Berhasil menambahkan data bundle',
                 id: response
             })
         }, {
+        transform({ body }) {
+            if (body.addOns && Array.isArray(body.addOns)) {
+                body.addOns = JSON.stringify(body.addOns)
+            }
+            else if (body.addOns && typeof body.addOns === 'string') {
+                // Biarkan saja, atau pastikan formatnya benar
+            }
+
+            if (body.jumlah_unit) body.jumlah_unit = Number(body.jumlah_unit)
+
+            if (body.is_active) body.is_active = String(body.is_active)
+        },
         body: BundlesModel.BundlesPayload,
         detail: {
             summary: 'POST bundle',
@@ -27,7 +44,19 @@ export const bundles = new Elysia({ prefix: '/bundles' })
     .get(
         '/',
         async () => {
+
+            const cacheKey = 'bundles'
+            const cached = await redis.get(cacheKey)
+
+            if (cached) {
+                return JSON.parse(cached)
+            }
+
             const response = await BundlesService.getAllBundles()
+
+            await redis.set(cacheKey, JSON.stringify(response))
+            await redis.expire(cacheKey, 60 * 60);
+
             return status(200, response)
         }, {
         detail: {
