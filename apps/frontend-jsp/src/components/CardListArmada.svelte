@@ -1,10 +1,26 @@
 <script lang="ts">
-    import { page } from '$app/stores'; // Ambil akses ke URL saat ini
-    let { armada } = $props();
-
+  import Button from "$lib/components/ui/button/button.svelte";
+  let { armada } = $props();
+  import { UsersRound } from "@lucide/svelte/icons";
+  import { formatPrice } from "$lib/hooks";
 </script>
 
-<div class="card">
-    <img src={armada.gambar} alt={armada.nama} />
-    <h3>{armada.nama}</h3>
+<div class="">
+  <img src={`http://localhost:3000${armada.gambar_armada}`} alt={armada.nama} />
+  <h3 class="text-xl font-bold tracking-tight text-gray-800 mb-2">
+    {armada.nama_armada}
+  </h3>
+  <div class="flex gap-2 items-center">
+    <UsersRound />
+    <p>{armada.kapasitas} orang</p>
+  </div>
+  <div class="flex justify-between">
+    <div>
+      <p>Mulai dari</p>
+      <p>{formatPrice(armada.harga_sewa)}</p>
+    </div>
+    <a href={`/list-armada/${armada.id}`}>
+      <Button>Lihat Detail</Button>
+    </a>
+  </div>
 </div>

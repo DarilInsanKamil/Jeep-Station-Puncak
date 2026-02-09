@@ -3,6 +3,7 @@ import { ArmadaError } from "../../errors/armadaError";
 import { ArmadaService } from "./service";
 import { ArmadaModel } from "./model";
 import { adminGuard } from "../../utils/adminGuard";
+import { redis } from "bun";
 
 export const armada = new Elysia({ prefix: '/armada' })
     .error({ ARMADA_ERROR: ArmadaError })
@@ -13,7 +14,18 @@ export const armada = new Elysia({ prefix: '/armada' })
         }
     })
     .get('/', async ({ query }) => {
+        const cacheKey = 'armada';
+        const cached = await redis.get(cacheKey)
+
+        if (cached) {
+            return JSON.parse(cached)
+        }
+
         const response = await ArmadaService.getAllArmada(query);
+
+        await redis.set(cacheKey, JSON.stringify(response))
+        await redis.expire(cacheKey, 60 * 60)
+
         return status(200, response);
     }, {
         query: ArmadaModel.GetArmadaQuery,
@@ -27,16 +39,16 @@ export const armada = new Elysia({ prefix: '/armada' })
         }
     })
     .get(
-    '/tersedia',
-      async ({ query }) => {
-        const response = await ArmadaService.checkKetersediaanArmada(query)
-        return status(200, response ?? [])
-    }, {
-      query: ArmadaModel.CheckAvailPayload,
-      detail: {
-        summary: 'GET check reservasi',
-        tags: ["Armada"]
-      },
+        '/tersedia',
+        async ({ query }) => {
+            const response = await ArmadaService.checkKetersediaanArmada(query)
+            return status(200, response ?? [])
+        }, {
+        query: ArmadaModel.CheckAvailPayload,
+        detail: {
+            summary: 'GET check reservasi',
+            tags: ["Armada"]
+        },
     }
     )
     .get('/:armadaId', async ({ params }) => {
@@ -53,11 +65,14 @@ export const armada = new Elysia({ prefix: '/armada' })
             404: ArmadaModel.ErrorResponse
         }
     })
-
     .group('', (app) => app
         .use(adminGuard)
         .post('/create', async ({ body }) => {
             const response = await ArmadaService.addArmada(body);
+
+            const cacheKey = `armada:all`
+            await redis.del(cacheKey)
+            
             return status(201, {
                 message: 'Berhasil menambahkan armada',
                 id: response
