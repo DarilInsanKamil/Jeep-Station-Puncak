@@ -11,10 +11,6 @@
   <link rel="icon" href={favicon} />
 </svelte:head>
 
-<nav class="relative w-full">
-    <Navigation />
-</nav>
 <main>
   {@render children()}
 </main>
-<footer>ini footer</footer>
