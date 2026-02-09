@@ -23,6 +23,7 @@ export const bundles = new Elysia({ prefix: '/bundles' })
         }
     }
     )
+    
     .get(
         '/',
         async () => {
