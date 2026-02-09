@@ -10,7 +10,7 @@
 <svelte:head>
   <title>List Armada - Jeep Station Puncak</title>
 </svelte:head>
-    
+
 <div class="min-h-screen bg-gray-50 py-8">
   <div class="container mx-auto px-4 md:px-8 lg:px-20">
     <div class="mb-8">
@@ -34,7 +34,7 @@
     {#if data?.data && data.data.length > 0}
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {#each data.data as armada (armada.id)}
-          <CardListArmada {armada} />
+            <CardListArmada {armada} href={`/list-armada/${armada.id}`}/>
         {/each}
       </div>
     {:else}

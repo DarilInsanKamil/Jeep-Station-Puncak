@@ -1,6 +1,6 @@
 <script lang="ts">
   import Button from "$lib/components/ui/button/button.svelte";
-  let { armada } = $props();
+  let { armada, href } = $props();
   import { UsersRound } from "@lucide/svelte/icons";
   import { formatPrice } from "$lib/hooks";
 </script>
@@ -19,7 +19,7 @@
       <p>Mulai dari</p>
       <p>{formatPrice(armada.harga_sewa)}</p>
     </div>
-    <a href={`/list-armada/${armada.id}`}>
+    <a href={href}>
       <Button>Lihat Detail</Button>
     </a>
   </div>

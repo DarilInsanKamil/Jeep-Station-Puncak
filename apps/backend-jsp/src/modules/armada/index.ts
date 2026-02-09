@@ -14,18 +14,7 @@ export const armada = new Elysia({ prefix: '/armada' })
         }
     })
     .get('/', async ({ query }) => {
-        const cacheKey = 'armada';
-        const cached = await redis.get(cacheKey)
-
-        if (cached) {
-            return JSON.parse(cached)
-        }
-
         const response = await ArmadaService.getAllArmada(query);
-
-        await redis.set(cacheKey, JSON.stringify(response))
-        await redis.expire(cacheKey, 60 * 60)
-
         return status(200, response);
     }, {
         query: ArmadaModel.GetArmadaQuery,
@@ -72,7 +61,7 @@ export const armada = new Elysia({ prefix: '/armada' })
 
             const cacheKey = `armada:all`
             await redis.del(cacheKey)
-            
+
             return status(201, {
                 message: 'Berhasil menambahkan armada',
                 id: response
