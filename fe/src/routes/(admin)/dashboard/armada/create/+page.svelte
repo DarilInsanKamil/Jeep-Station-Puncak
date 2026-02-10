@@ -3,6 +3,7 @@
     import Button from "$lib/components/ui/button/button.svelte";
     import { toast } from "svelte-sonner";
     import type { PageProps } from "./$types";
+    import { ArrowLeft } from "@lucide/svelte";
     let{form}:PageProps = $props();
 
     let previewUrl = $state<string | null>(null);
@@ -17,6 +18,11 @@
     }
 </script>
 
+<div class="py-5 px-10">
+    <a href="/dashboard/armada" class="flex gap-2">
+        <ArrowLeft /> Kembali
+    </a>
+</div>
 
 <section class="p-10">
     <form action="?create" method="POST" class="grid gap-5 w-1/2" enctype="multipart/form-data" use:enhance={() => {
