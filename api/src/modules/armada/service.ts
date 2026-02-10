@@ -52,7 +52,6 @@ export abstract class ArmadaService {
 
         const whereClause = conditions.length > 0 ? `where ${conditions.join('AND')}` : '';
 
-
         const armadaQuery = `select * from armada ${whereClause} order by created_at desc limit $${counter++} offset $${counter++}`
         values.push(limit, offset)
 

@@ -31,13 +31,25 @@ export abstract class BundlesService {
         }
         return result.rows[0].id
     }
-    static async getAllBundles() {
-        const bundlesQuery = {
-            text: 'select * from bundles'
-        }
-        const result = await pool.query(bundlesQuery)
+  static async getAllBundles({page = 1, limit= 10, search = ''}) {
+    const offset = (page - 1) * limit;
+    const conditions: string[] = [];
+    const values: any[] = [];
+    let counter = 1;
 
-        return result.rows
+    if (search) {
+        conditions.push(`title ILIKE $${counter++}`);
+        values.push(`%${search}%`);
+    }
+
+    const whereClause = conditions.length > 0 ? `where ${conditions.join('AND')}` : '';
+    const bundlesQuery = `select * from bundles ${whereClause} order by created_at desc limit $${counter++} offset $${counter++}`
+    values.push(limit, offset)
+    const result = await pool.query({
+      text: bundlesQuery,
+      values
+    })
+    return result.rows
     }
     static async getBundleById(bundleId: string) {
         const bundlesQuery = {
@@ -56,7 +68,7 @@ export abstract class BundlesService {
         const date = new Date().toISOString()
         const active: boolean = payload.is_active === 'true';
         const bundlesQuery = {
-            text: `update bundles set "title" = $1,  "deskripsi" = $2,  "jumlah_unit" = $3, "harga" = $4,  
+            text: `update bundles set "title" = $1,  "deskripsi" = $2,  "jumlah_unit" = $3, "harga" = $4,
             "is_active" = $5, "addOns" = $6, "updated_at" = $7 where "id" = $8 returning id`,
             values: [payload.title, payload.deskripsi, payload.jumlah_unit, payload.harga, active, payload.addOns, date, bundleId]
         }

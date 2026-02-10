@@ -2,12 +2,13 @@ import { client } from "$lib/api";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ url }) => {
-
   const search = url.searchParams.get('search')?.toString() ?? '';
+  const page = Number(url.searchParams.get('page')?.toString() ?? '1');
+  const limit = Number(url.searchParams.get('limit')?.toString() ?? '10');
 
   const { data, error } = await client.customer.get({
     query: {
-      search
+      search, page, limit
     }
   })
 
