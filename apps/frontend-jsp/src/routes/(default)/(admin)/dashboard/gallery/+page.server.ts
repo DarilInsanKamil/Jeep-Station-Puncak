@@ -4,7 +4,7 @@ import { fail } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const actions = {
-  delete: async ({request, cookies}) => {
+  delete: async ({ request, cookies }) => {
     const formData = await request.formData()
     const galleryId = formData.get('id')?.toString() ?? '';
 
@@ -30,14 +30,14 @@ export const actions = {
   }
 }
 
-export const load: PageServerLoad = async() => {
-    const {data, error} = await client.gallery.get()
+export const load: PageServerLoad = async () => {
+  const { data, error } = await client.gallery.get()
 
-    if(error) {
-      console.error('Gagal load data gallery', error)
-      return { data: [] };
-    }
-    return {
-        data: data ?? []
-    }
+  if (error) {
+    console.error('Gagal load data gallery', error)
+    return { data: [] };
+  }
+  return {
+    data: data ?? []
+  }
 }

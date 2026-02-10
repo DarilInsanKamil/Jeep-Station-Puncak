@@ -31,7 +31,7 @@
 </script>
 
 
-<div class="flex justify-between gap-6 p-10 ">
+<div class="flex justify-between gap-6 p-10 md:flex-col lg:flex-row">
     <div class="w-full">
     <img
         src={`http://localhost:3000${data.armada.gambar_armada}`}
@@ -53,17 +53,16 @@
         </span>
     </div>
     </div>
-    <div class="lg:col-span-1">
+    <div>
         <div class="bg-white rounded-lg shadow-md p-6 sticky top-8">
             <h2 class="text-2xl font-bold font-['phudu'] text-green-950 mb-6">
                 Ringkasan Pemesanan
             </h2>
-
             <div class="space-y-4">
             <label for='' class="block text-sm font-medium text-gray-700 mb-2">
                 Tanggal Sewa
             </label>
-            <!-- <DateRangePicker bind:value={bookingDate}/> -->
+            <DateRangePicker bind:value={bookingDate}/>
             <DatePicker bind:value={bookingDate}/>
         </div>
 
@@ -81,10 +80,6 @@
                 <span class="text-green-950">{formatPrice(totalPrice())}</span>
             </div>
         </div>
-        <!-- <Button class='mt-5'>
-            Reservasi Sekarang
-        </Button> -->
         <FormCustomer/>
-    </div>
     </div>
 </div>

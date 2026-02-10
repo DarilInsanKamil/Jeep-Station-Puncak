@@ -10,14 +10,13 @@
   import { Button } from "$lib/components/ui/button";
   import { RangeCalendar } from "$lib/components/ui/range-calendar";
   import * as Popover from "$lib/components/ui/popover";
-  import type { DateRange } from "bits-ui";
 
   const df = new DateFormatter("id-ID", {
     dateStyle: "medium",
   });
 
   let { value = $bindable() } = $props<{
-      value?: DateRange
+      value?: any
     }>();
 
 
@@ -37,7 +36,7 @@
   }
 </script>
 
-<div class="grid gap-2">
+<div class="grid gap-2 md:block sm:block lg:hidden">
   <Popover.Root>
     <Popover.Trigger>
       {#snippet child({ props })}

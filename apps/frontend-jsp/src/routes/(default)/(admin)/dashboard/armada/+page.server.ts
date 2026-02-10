@@ -11,12 +11,12 @@ export const actions = {
 
     const { error } = await withAuth(cookies, async (token) => {
       return await client.armada({ armadaId }).delete(
-          undefined,
-          {
-            headers: {
-              authorization: `Bearer ${token}`
-            }
+        undefined,
+        {
+          headers: {
+            authorization: `Bearer ${token}`
           }
+        }
       )
     })
     if (error) {
