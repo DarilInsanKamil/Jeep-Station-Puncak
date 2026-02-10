@@ -10,7 +10,16 @@
 </script>
 
 <section class="p-10 w-full">
-  <section class="float-right mb-5">
+  <section class="flex justify-between items-center mb-5">
+      <form action="?search">
+        <input
+          type="text"
+          name="search"
+          placeholder="Cari nama armada"
+          class="border border-gray-200 px-2 py-1 rounded-sm"
+        />
+        <Button size="sm">Cari</Button>
+      </form>
     <a href="/dashboard/paket-bundle/create">
         <Button><Plus size={20} />Tambah Bundle</Button>
     </a>

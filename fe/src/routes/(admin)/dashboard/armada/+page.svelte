@@ -20,7 +20,9 @@
       />
       <Button size="sm">Cari</Button>
     </form>
-    <Button><Plus size={20} />Tambah Armada</Button>
+    <a href="/dashboard/armada/create">
+        <Button><Plus size={20} />Tambah Armada</Button>
+    </a>
   </section>
 
   <div class="w-full overflow-hidden rounded-lg border border-gray-200 mt-5">
