@@ -1,26 +1,21 @@
 <script lang='ts'>
-    import Button from "$lib/components/ui/button/button.svelte";
-    import { ArrowLeft, X } from "@lucide/svelte";
-    import type { PageProps } from "./$types";
-    import { toast } from "svelte-sonner";
     import { enhance } from "$app/forms";
-    import BreadCrumb from "$lib/molecules/BreadCrumb.svelte";
+    import { toast } from "svelte-sonner";
+    import type { PageProps } from "./$types";
+    import Button from "$lib/components/ui/button/button.svelte";
+    import { X } from "@lucide/svelte";
 
-    let {form}: PageProps = $props()
-    let previewUrl = $state<string|null>(null);
-    let addOns = $state<string[]>([]);
+    let {data, form}: PageProps = $props()
+    let previewUrl = $state<string|null>(data?.gambar_bundles ?? null);
+    let addOns = $state<string[]>(data?.addOns ?? []);
     let inputAddOn = $state("")
 
-    const handleImageChange = (e: Event) => {
-      const input = e.target as HTMLInputElement;
-      if(input.files && input.files[0]) {
-        const file = input.files[0];
-        previewUrl = URL.createObjectURL(file)
-      } else {
-        previewUrl = null
+    function handleImageChange(event: Event) {
+      const input = event.target as HTMLInputElement;
+      if (input.files && input.files[0]) {
+        previewUrl = URL.createObjectURL(input.files[0]);
       }
     }
-
 
     const handleAddOn = (e: KeyboardEvent | MouseEvent) => {
       if((e instanceof KeyboardEvent && e.key === 'Enter') || e.type === 'click'){
@@ -38,19 +33,12 @@
     }
 </script>
 
-<div class="py-5 px-10">
-    <a href="/dashboard/armada" class="flex gap-2 mb-5">
-        <ArrowLeft /> Kembali
-    </a>
-    <BreadCrumb/>
-</div>
-
 
 <section class="p-10 w-full">
-    <form action="?create" method="POST" class="grid gap-5 w-1/2" enctype="multipart/form-data" use:enhance={()=> {
+    <form action="?edit" method="POST" class="grid gap-5 w-1/2" enctype="multipart/form-data" use:enhance={()=> {
       return async({result, update}) => {
         if(result.type === 'success') {
-          toast.success('Berhasil menambah data bundle')
+          toast.success('Berhasil merubah data bundle')
         } else if (result.type === 'failure') {
           toast.error((result.data as { message?: string })?.message || "Terjadi kesalahan")
         }
@@ -68,12 +56,13 @@
                 accept="image/*"
                 class="border mt-2 w-full border-green-200 p-2 rounded-md"
                 onchange={handleImageChange}
-                required
             >
             {#if previewUrl}
                 <p class="text-sm text-gray-500 mb-2">Preview:</p>
                 <img
-                    src={previewUrl}
+                    src={previewUrl.startsWith('blob:')
+                        ? previewUrl
+                        : `http://localhost:3000${previewUrl}`}
                     alt="Preview bundle"
                     class="w-full max-w-xs h-48 object-cover rounded-md border border-gray-300"
                 >
@@ -87,7 +76,7 @@
             <input
                 type="text"
                 name="title"
-                value={form?.values?.title}
+                value={form?.values?.title ?? data.title ?? ""}
                 placeholder="Masukan nama bundle"
                 class="border mt-2 w-full border-green-200 p-2 rounded-md"
                 required
@@ -101,7 +90,7 @@
             <input
                 type="text"
                 name="harga"
-                value={form?.values?.harga}
+                value={form?.values?.harga ?? data.harga ?? ""}
                 placeholder="Masukan harga bundle"
                 class="border mt-2 w-full border-green-200 p-2 rounded-md"
                 required
@@ -115,7 +104,7 @@
             <input
                 type="number"
                 name="jumlah_unit"
-                value={form?.values?.jumlah_unit}
+                value={form?.values?.jumlah_unit ?? data.jumlah_unit ?? ""}
                 placeholder="Masukan jumlah jumlah_unit"
                 class="border mt-2 w-full border-green-200 p-2 rounded-md"
                 required
@@ -136,7 +125,7 @@
             <Button type="button" variant="outline" onclick={handleAddOn} class='mt-2'>Tambah</Button>
             {#if addOns.length > 0}
                 <div class="flex flex-wrap gap-2 mt-2">
-                    {#each addOns as item, i}
+                    {#each data.addOns as item, i}
                         <span class="text-gray-800 bg-amber-100 text-sm px-2 py-1 rounded-sm flex items-center gap-1 border font-semibold">
                             {item}
                             <Button
@@ -160,7 +149,7 @@
             </label>
             <br>
             <textarea name="deskripsi" placeholder="Masuk deskrirpsi armada" class="border mt-2 w-full border-green-200 p-2 rounded-md" required>
-                {form?.values?.deskripsi}
+                {form?.values?.deskripsi ?? data.deskripsi ?? ""}
             </textarea>
         </div>
         <Button type='submit'>Upload Data Bundle</Button>

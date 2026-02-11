@@ -37,8 +37,8 @@ export const bundles = new Elysia({ prefix: '/bundles' })
     )
     .get(
         '/',
-        async () => {
-            const response = await BundlesService.getAllBundles()
+      async ({ query }) => {
+            const response = await BundlesService.getAllBundles(query)
             return status(200, response)
         }, {
         detail: {

@@ -78,7 +78,7 @@
                   </p>
                 </td>
                 <td class="flex gap-2 px-6 py-4">
-                  <a href={`/dashboard/armada/edit/${bundle.id}`}>
+                  <a href={`/dashboard/paket-bundle/edit/${bundle.id}`}>
                     <Button size="icon-sm" variant="outline">
                       <PencilLine size={20} color="#5b9810" />
                     </Button>
