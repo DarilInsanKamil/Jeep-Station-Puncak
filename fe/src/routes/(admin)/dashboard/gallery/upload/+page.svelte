@@ -51,7 +51,7 @@
                 class="w-full max-w-xs h-48 object-cover rounded-md border border-gray-300"
             >
         {/if}
-        <div>
+        <div class="mt-3 mb-5">
             <label for="deskripsi" class="font-semibold">
                 Deskripsi *
             </label>
