@@ -9,23 +9,23 @@
   let { data, form }: PageProps = $props();
 </script>
 
-<section class="p-10 w-full">
-  <section class="flex justify-between items-center mb-5">
-      <form action="?search">
+<section class="lg:p-10 p-5 w-full">
+  <section class="lg:flex inline justify-between items-center mb-5">
+      <form action="?search" class="w-full ">
         <input
           type="text"
           name="search"
-          placeholder="Cari nama armada"
-          class="border border-gray-200 px-2 py-1 rounded-sm"
+          placeholder="Cari nama bundle"
+          class="border border-gray-200 px-2 py-1 rounded-sm lg:mb-0 mb-3"
         />
         <Button size="sm">Cari</Button>
       </form>
-    <a href="/dashboard/paket-bundle/create">
+    <a href="/dashboard/paket-bundle/create" >
         <Button><Plus size={20} />Tambah Bundle</Button>
     </a>
   </section>
 
-  <div class="w-full overflow-hidden rounded-lg border border-gray-200 ">
+  <div class="w-full overflow-hidden rounded-lg border border-gray-200 lg:m-0 mt-2">
     <div class="overflow-x-auto">
       <table class="w-full text-left text-sm text-gray-500">
         <thead class="bg-gray-100 text-xs uppercase text-gray-700">
