@@ -79,15 +79,6 @@ export async function withAuth<T>(
     return await apiCall(newAccessToken);
 }
 
-export const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        minimumFractionDigits: 0
-    }).format(price);
-};
-
-
 
 export const formatRupiah = (value: number) => {
 		return new Intl.NumberFormat('id-ID', {

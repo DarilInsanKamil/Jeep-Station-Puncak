@@ -3,16 +3,18 @@
     import { toast } from "svelte-sonner";
     import type { PageProps } from "./$types";
     import Button from "$lib/components/ui/button/button.svelte";
-    import { Trash } from "@lucide/svelte";
-
+    import { Plus, Trash } from "@lucide/svelte";
     let {data}:PageProps = $props();
 </script>
 
+<a href="/dashboard/gallery/upload" class="p-10">
+    <Button><Plus size={20} />Tambah Data Gallery</Button>
+</a>
 
 <section class="p-10 grid grid-cols-4 gap-4">
     {#if data.data && data.data.length > 0}
         {#each data.data as gallery (gallery.id)}
-            <div class="relative">
+            <div class="relative border border-green-300 p-3 rounded-md">
                 <img src={`http://localhost:3000${gallery.gambar_url}`} alt={gallery.id}>
                 <p>{gallery.deskripsi}</p>
                 <form
