@@ -1,9 +1,10 @@
 <script lang='ts'>
     import Button from "$lib/components/ui/button/button.svelte";
-    import { X } from "@lucide/svelte";
+    import { ArrowLeft, X } from "@lucide/svelte";
     import type { PageProps } from "./$types";
     import { toast } from "svelte-sonner";
     import { enhance } from "$app/forms";
+    import BreadCrumb from "$lib/molecules/BreadCrumb.svelte";
 
     let {form}: PageProps = $props()
     let previewUrl = $state<string|null>(null);
@@ -20,6 +21,7 @@
       }
     }
 
+
     const handleAddOn = (e: KeyboardEvent | MouseEvent) => {
       if((e instanceof KeyboardEvent && e.key === 'Enter') || e.type === 'click'){
         e.preventDefault()
@@ -35,6 +37,14 @@
       addOns = addOns.filter((_,i) => i !== index)
     }
 </script>
+
+<div class="py-5 px-10">
+    <a href="/dashboard/armada" class="flex gap-2 mb-5">
+        <ArrowLeft /> Kembali
+    </a>
+    <BreadCrumb/>
+</div>
+
 
 <section class="p-10 w-full">
     <form action="?create" method="POST" class="grid gap-5 w-1/2" enctype="multipart/form-data" use:enhance={()=> {

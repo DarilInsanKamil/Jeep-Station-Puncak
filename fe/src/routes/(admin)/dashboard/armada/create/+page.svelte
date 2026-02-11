@@ -4,6 +4,12 @@
     import { toast } from "svelte-sonner";
     import type { PageProps } from "./$types";
     import { ArrowLeft } from "@lucide/svelte";
+
+    import { page } from '$app/state';
+    import BreadCrumb from "$lib/molecules/BreadCrumb.svelte";
+
+     // Reactive access to the full URL object
+    let currentUrl = $state (page.url.pathname);
     let{form}:PageProps = $props();
 
     let previewUrl = $state<string | null>(null);
@@ -16,12 +22,14 @@
         previewUrl = null
       }
     }
+
 </script>
 
 <div class="py-5 px-10">
-    <a href="/dashboard/armada" class="flex gap-2">
+    <a href="/dashboard/armada" class="flex gap-2 mb-3">
         <ArrowLeft /> Kembali
     </a>
+    <BreadCrumb/>
 </div>
 
 <section class="p-10">

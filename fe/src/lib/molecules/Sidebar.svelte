@@ -1,38 +1,64 @@
 <script>
+    import { page } from "$app/state";
     import Button from "$lib/components/ui/button/button.svelte";
+     import blackLogo from '$lib/assets/blacklogo.png';
 </script>
 
-<div class="flex flex-col justify-between h-svh p-5 border-r">
+<div class="flex flex-col justify-between p-5 border-r h-screen">
     <ul class="">
-            <a href="/dashboard/armada">
-        <li class="p-2 hover:bg-blue-50 rounded-sm ">
+    <img src={blackLogo} alt="logo" width="100px" height="100px" class="mb-5"/>
+            <a href="/dashboard/"
+                class={`block p-2 rounded-sm hover:bg-green-50 ${
+                   page.url.pathname === '/dashboard'
+                     ? 'bg-green-100 text-green-700 font-semibold'
+                     : ''
+                 }`}
+            >
+        <li>
+            Home
+        </li>
+            </a>
+            <a href="/dashboard/armada"
+                class={`block p-2 rounded-sm hover:bg-green-50 ${
+                  page.url.pathname.startsWith('/dashboard/armada') ? 'bg-green-100 text-green-700 font-semibold' : ''
+                }`}
+            >
             Armada
-        </li>
             </a>
-            <a href="/dashboard/paket-bundle">
-        <li class="p-2 hover:bg-blue-50 rounded-sm">
+            <a href="/dashboard/paket-bundle"
+                class={`block p-2 rounded-sm hover:bg-green-50 ${
+                  page.url.pathname.startsWith('/dashboard/paket-bundle') ? 'bg-green-100 text-green-700 font-semibold' : ''
+                }`}
+                >
                 Paket Bundle
-        </li>
             </a>
-        <a href="/dashboard/customer">
-            <li class="p-2 hover:bg-blue-50 rounded-sm">
+        <a href="/dashboard/customer"
+            class={`block p-2 rounded-sm hover:bg-green-50 ${
+              page.url.pathname.startsWith('/dashboard/customer') ? 'bg-green-100 text-green-700 font-semibold' : ''
+            }`}
+            >
                 Customer
-            </li>
         </a>
-            <a href="/dashboard/reservasi">
-        <li class="p-2 hover:bg-blue-50 rounded-sm">
+            <a href="/dashboard/reservasi"
+                class={`block p-2 rounded-sm hover:bg-green-50 ${
+                  page.url.pathname.startsWith('/dashboard/reservasi') ? 'bg-green-100 text-green-700 font-semibold' : ''
+                }`}
+                >
                 Reservasi
-        </li>
             </a>
-            <a href="/dashboard/testimoni">
-        <li class="p-2 hover:bg-blue-50 rounded-sm">
+            <a href="/dashboard/testimoni"
+                class={`block p-2 rounded-sm hover:bg-green-50 ${
+                  page.url.pathname.startsWith('/dashboard/testimoni') ? 'bg-green-100 text-green-700 font-semibold' : ''
+                }`}
+                >
                 Testimoni
-        </li>
             </a>
-            <a href="/dashboard/gallery">
-        <li class="p-2 hover:bg-blue-50 rounded-sm">
+            <a href="/dashboard/gallery"
+                class={`block p-2 rounded-sm hover:bg-green-50 ${
+                  page.url.pathname.startsWith('/dashboard/gallery') ? 'bg-green-100 text-green-700 font-semibold' : ''
+                }`}
+                >
                 Gallery
-        </li>
             </a>
     </ul>
     <Button variant="destructive">
