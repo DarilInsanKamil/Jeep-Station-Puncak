@@ -2,12 +2,13 @@
     import { formatRupiah } from "$lib";
     import Button from "$lib/components/ui/button/button.svelte";
     import { Car } from "@lucide/svelte";
+    import { PUBLIC_API_URL } from '$env/static/public';
 
     let{bundle} = $props()
 </script>
 
 <div class="border bg-white shadow-sm rounded-sm">
-    <img src={`http://localhost:3000${bundle.gambar_bundles}`} alt={bundle.id}  class="object-cover w-full h-64 rounded-t-sm">
+    <img src={`${PUBLIC_API_URL}${bundle.gambar_bundles}`} alt={bundle.id}  class="object-cover w-full h-64 rounded-t-sm">
     <div class="p-4">
     <div>
         <h4 class="font-semibold tracking-tighter text-xl">{bundle.title}</h4>

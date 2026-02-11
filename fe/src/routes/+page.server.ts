@@ -9,7 +9,7 @@ export const load = async () => {
   ] = await Promise.all([
     client.armada.get({ query: { limit: 4 } }),
     client.testimoni.get({ query: { limit: 4 } }),
-    client.gallery.get({ query: { limit: 4 } }),
+    client.gallery.get({ query: { limit: 10 } }),
     client.bundles.get({ query: { limit: 4 } })
   ])
 

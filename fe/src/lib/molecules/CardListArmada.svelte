@@ -2,12 +2,12 @@
     import { formatRupiah } from "$lib";
     import Button from "$lib/components/ui/button/button.svelte";
     import { UserRound } from "@lucide/svelte";
-
+    import { PUBLIC_API_URL } from '$env/static/public';
     let{armada} = $props()
 </script>
 
 <div class="border bg-white shadow-sm rounded-sm">
-    <img src={`http://localhost:3000${armada.gambar_armada}`} alt={armada.id}  class="object-cover w-full h-64 rounded-t-sm">
+    <img src={`${PUBLIC_API_URL}${armada.gambar_armada}`} alt={armada.id}  class="object-cover w-full h-64 rounded-t-sm">
     <div class="p-4">
     <div>
         <h4 class="font-semibold tracking-tighter text-xl">{armada.nama_armada}</h4>
