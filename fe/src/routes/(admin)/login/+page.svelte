@@ -13,8 +13,17 @@
     }
 </script>
 
-<section class="w-full h-svh flex justify-center items-center ">
-    <form action="?login" method="POST" class="w-1/4" use:enhance = {() => {
+<section class="w-full h-svh flex justify-center flex-col items-center lg:p-0 p-5">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold tracking-tighter text-green-950 mb-2">
+        Selamat Datang
+      </h1>
+      <p class="text-gray-600">
+        Masuk ke akun Jeep Station Puncak Anda
+      </p>
+    </div>
+
+    <form action="?login" method="POST" class="lg:w-1/4 w-full bg-white shadow-sm p-5 rounded-md mt-5" use:enhance = {() => {
       return async({result, update}) => {
         if(result.type === 'redirect') {
           toast.success('Berhasil Login')
@@ -67,9 +76,9 @@
             </div>
         </div>
         <div class="flex flex-col justify-center items-center mt-5 gap-2">
-            <Button type='submit' class='w-full'>Login</Button>
+            <Button type='submit' class='w-full bg-green-900 hover:bg-green-800'>Login</Button>
             <p class="text-sm text-gray-500">Belum punya akun?</p>
-            <a href="/signup" class="border w-full p-1.5 text-center rounded-md border-black outline-black hover:bg-zinc-100 transition-all">
+            <a href="/signup" class="border w-full p-1.5 text-center rounded-md border-black outline-black hover:bg-green-100 transition-all">
                 Register
             </a>
         </div>
