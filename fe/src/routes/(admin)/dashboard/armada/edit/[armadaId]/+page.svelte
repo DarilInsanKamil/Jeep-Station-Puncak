@@ -4,7 +4,7 @@
     import type { PageProps } from "./$types";
     import Button from "$lib/components/ui/button/button.svelte";
     import { ArrowLeft } from "@lucide/svelte";
-
+    import { PUBLIC_API_URL } from "$env/static/public";
     let {data, form} : PageProps = $props();
     let previewUrl = $derived(data?.gambar_armada ?? null);
 
@@ -17,14 +17,14 @@
 
 </script>
 
-<div class="py-5 px-10">
+<div class="py-5 lg:px-10 px-5">
     <a href="/dashboard/armada" class="flex gap-2">
         <ArrowLeft /> Kembali
     </a>
 </div>
 
-<section class="p-10">
-    <form action="?edit" method="POST" class="grid gap-5 w-1/2" enctype="multipart/form-data" use:enhance={() => {
+<section class="lg:p-10 p-5">
+    <form action="?edit" method="POST" class="grid lg:gap-5 gap-3 lg:w-1/2 w-full" enctype="multipart/form-data" use:enhance={() => {
       return async({result, update}) => {
         if(result.type === 'success') {
           toast.success('Berhasil Merubah data')
@@ -52,7 +52,7 @@
                 <img
                     src={previewUrl.startsWith('blob:')
                         ? previewUrl
-                        : `http://localhost:3000${previewUrl}`}
+                        : `${PUBLIC_API_URL}${previewUrl}`}
                     alt="Preview armada"
                     class="w-full max-w-xs h-48 object-cover rounded-md border border-gray-300"
                 >

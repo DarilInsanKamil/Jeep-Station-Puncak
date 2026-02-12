@@ -17,8 +17,8 @@
     }
 </script>
 
-<section class="p-10  w-full">
-<form action="?create" method="POST" class="grid gap-5 w-1/2" enctype="multipart/form-data" use:enhance={() => {
+<section class="lg:p-10 p-5  w-full">
+<form action="?create" method="POST" class="grid lg:gap-5 gap-3 lg:w-1/2 w-full" enctype="multipart/form-data" use:enhance={() => {
   return async({result, update}) => {
     if(result.type === 'success') {
       toast.success('Berhasil Menambah data')

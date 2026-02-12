@@ -9,9 +9,9 @@
   let { data, form }: PageProps = $props();
 </script>
 
-<section class="p-10 w-full">
-  <section class="flex justify-between">
-    <form action="?search">
+<section class="lg:p-10 p-5 w-full">
+  <section class="lg:flex inline justify-between">
+    <form action="?search" class="lg:mb-0 mb-5">
       <input
         type="text"
         name="search"
@@ -20,12 +20,12 @@
       />
       <Button size="sm">Cari</Button>
     </form>
-    <a href="/dashboard/armada/create">
+    <a href="/dashboard/armada/create" >
         <Button><Plus size={20} />Tambah Armada</Button>
     </a>
   </section>
 
-  <div class="w-full overflow-hidden rounded-lg border border-gray-200 mt-5">
+  <div class="w-full overflow-hidden rounded-lg border border-gray-200 lg:mt-5 mt-2">
     <div class="overflow-x-auto">
       <table class="w-full text-left text-sm text-gray-500">
         <thead class="bg-gray-100 text-xs uppercase text-gray-700">

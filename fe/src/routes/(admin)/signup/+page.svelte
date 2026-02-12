@@ -14,8 +14,16 @@
 </script>
 
 
-<section class="w-full h-svh flex justify-center items-center ">
-    <form action="?signup" method="POST" class="w-1/4" use:enhance = {() => {
+<section class="w-full h-svh flex justify-center items-center lg:p-0 p-5 flex-col">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold tracking-tighter text-green-950 mb-2">
+        Buat Akun Baru
+      </h1>
+      <p class="text-gray-600">
+        Daftar untuk menikmati kemudahan reservasi jeep
+      </p>
+    </div>
+    <form action="?signup" method="POST" class="lg:w-1/4 w-full p-5 bg-white shadow-sm rounded-md mt-5" use:enhance = {() => {
       return async({result, update}) => {
         if(result.type === 'success') {
           toast.success('Berhasil Membuat Akun')
@@ -109,9 +117,9 @@
         </div>
         </div>
         <div class="flex flex-col justify-center items-center mt-5 gap-2">
-            <Button type='submit' class='w-full'>Sign up</Button>
+            <Button type='submit' class='w-full bg-green-900 hover:bg-green-800'>Sign up</Button>
             <p class="text-sm text-gray-500">Sudah punya akun?</p>
-            <a href="/login" class="border w-full p-1.5 text-center rounded-md border-black outline-black hover:bg-zinc-100 transition-all">
+            <a href="/login" class="border w-full p-1.5 text-center rounded-md border-black outline-black hover:bg-green-100 transition-all">
                 Login
             </a>
         </div>

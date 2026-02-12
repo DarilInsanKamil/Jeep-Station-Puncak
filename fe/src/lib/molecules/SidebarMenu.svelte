@@ -1,12 +1,10 @@
 <script>
     import { page } from "$app/state";
     import Button from "$lib/components/ui/button/button.svelte";
-     import blackLogo from '$lib/assets/blacklogo.png';
 </script>
 
 <div class="flex flex-col justify-between p-5 border-r h-screen">
     <ul class="">
-    <img src={blackLogo} alt="logo" width="100px" height="100px" class="mb-5"/>
             <a href="/dashboard/"
                 class={`block p-2 rounded-sm hover:bg-green-50 ${
                    page.url.pathname === '/dashboard'
@@ -61,7 +59,4 @@
                 Gallery
             </a>
     </ul>
-    <Button variant="destructive">
-        Logout
-    </Button>
 </div>

@@ -8,17 +8,8 @@
   let { data, form }: PageProps = $props();
 </script>
 
-<section class="p-10 w-full">
+<section class="lg:p-10 p-5 w-full">
   <section class="flex justify-between">
-    <form action="?search">
-      <input
-        type="text"
-        name="search"
-        placeholder="Cari nama armada"
-        class="border border-gray-200 px-2 py-1 rounded-sm"
-      />
-      <Button size="sm">Cari</Button>
-    </form>
     <a href="/dashboard/testimoni/create">
     <Button><Plus size={20} />Tambah Testimoni</Button>
     </a>

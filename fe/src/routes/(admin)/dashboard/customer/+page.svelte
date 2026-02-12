@@ -23,9 +23,9 @@
     }
 </script>
 
-<section class="p-10 w-full">
-  <section class="flex justify-between items-center">
-    <form action="?search">
+<section class="lg:p-10 p-5 w-full">
+  <section class="lg:flex inline justify-between items-center">
+    <form action="?search" class="lg:mb-0 mb-3">
       <input
         type="text"
         name="search"
@@ -45,7 +45,7 @@
       </Button>
   </section>
 
-  <div class="w-full overflow-hidden rounded-lg border border-gray-200 mt-5">
+  <div class="w-full overflow-hidden rounded-lg border border-gray-200 lg:mt-5 mt-2">
     <div class="overflow-x-auto">
       <table class="w-full text-left text-sm text-gray-500">
         <thead class="bg-gray-100 text-xs uppercase text-gray-700">
