@@ -1,9 +1,11 @@
 import { withAuth } from "$lib";
 import { client } from "$lib/api";
 import { fail, type Actions } from "@sveltejs/kit";
+import { jwtDecode } from "jwt-decode";
 
 export const actions: Actions = {
   default: async ({ cookies, request }) => {
+
     const formData = await request.formData()
     const gambarFile = formData.get('gambar_armada') as File
 

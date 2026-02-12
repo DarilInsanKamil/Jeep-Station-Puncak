@@ -44,4 +44,18 @@ export namespace UserModel {
         message: t.String()
     })
     export type ErrorResponse = typeof ErrorResponse.static
+
+    export const UserResponse = t.Object({
+        id: t.String(),
+        email: t.String(),
+        username: t.String(),
+        role: t.String()
+    })
+    export type UserResponse = typeof UserResponse.static
+
+    export const MeResponse = t.Object({
+        success: t.Boolean(),
+        response: UserResponse
+    })
+    export type MeResponse = typeof MeResponse.static
 }

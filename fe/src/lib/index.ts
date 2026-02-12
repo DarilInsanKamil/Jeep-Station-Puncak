@@ -1,6 +1,7 @@
 // place files you want to import through the `$lib` alias in this folder.
 import { type Cookies, redirect } from '@sveltejs/kit';
 import { client } from './api';
+import { jwtDecode } from 'jwt-decode';
 
 export async function withAuth<T>(
     cookies: Cookies,

@@ -1,4 +1,4 @@
-import Elysia, { status } from "elysia";
+import Elysia, { status, t } from "elysia";
 import { UserService } from "./service";
 import { UserModel } from "./model";
 import { UserError } from "../../errors/userError";
@@ -10,6 +10,28 @@ export const users = new Elysia({ prefix: '/users' })
         if (code === 'USER_ERROR') {
             set.status = error.status;
             return error.toResponse();
+        }
+    })
+    .post(
+      '/me',
+      async ({body}) => {
+        const {userId} = body
+        const response = await UserService.getUserById(userId)
+        return {
+          success: true,
+          response
+        }
+    }, {
+        body: t.Object({
+          userId: t.String()
+        }),
+        response: {
+            200: UserModel.MeResponse,
+            404: UserModel.ErrorResponse
+        },
+        detail: {
+            summary: "Get user by ID",
+            tags: ['Users']
         }
     })
     .post(

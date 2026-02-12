@@ -29,7 +29,7 @@
                 name="name"
                 value={form?.values?.name}
                 placeholder="Masukan nama"
-                class="border mt-2 w-full border-black p-2 rounded-md"
+                class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md"
                 required
             >
         </div>
@@ -43,7 +43,7 @@
                 name="rating"
                 value={form?.values?.rating}
                 placeholder="Masukan harga sewa/hari"
-                class="border mt-2 w-full border-black p-2 rounded-md"
+                class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md"
                 required
             >
         </div>
@@ -52,10 +52,10 @@
                 Komentar *
             </label>
             <br>
-            <textarea name="komentar" placeholder="Masukan Komentar" class="border mt-2 w-full border-black p-2 rounded-md" required>
+            <textarea name="komentar" placeholder="Masukan Komentar" class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md" required>
                 {form?.values?.komentar}
             </textarea>
         </div>
-        <Button type='submit'>Upload Data Testimoni</Button>
+        <Button type='submit' class="bg-green-900 hover:bg-green-800">Upload Data Testimoni</Button>
     </form>
 </section>

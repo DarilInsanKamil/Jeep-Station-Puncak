@@ -54,7 +54,7 @@
                 type="file"
                 name="gambar_bundle"
                 accept="image/*"
-                class="border mt-2 w-full border-green-200 p-2 rounded-md"
+                class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md"
                 onchange={handleImageChange}
             >
             {#if previewUrl}
@@ -78,7 +78,7 @@
                 name="title"
                 value={form?.values?.title ?? data.title ?? ""}
                 placeholder="Masukan nama bundle"
-                class="border mt-2 w-full border-green-200 p-2 rounded-md"
+                class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md"
                 required
             >
         </div>
@@ -92,7 +92,7 @@
                 name="harga"
                 value={form?.values?.harga ?? data.harga ?? ""}
                 placeholder="Masukan harga bundle"
-                class="border mt-2 w-full border-green-200 p-2 rounded-md"
+                class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md"
                 required
             >
         </div>
@@ -106,7 +106,7 @@
                 name="jumlah_unit"
                 value={form?.values?.jumlah_unit ?? data.jumlah_unit ?? ""}
                 placeholder="Masukan jumlah jumlah_unit"
-                class="border mt-2 w-full border-green-200 p-2 rounded-md"
+                class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md"
                 required
             >
         </div>
@@ -118,7 +118,7 @@
             <input
                 type="text"
                 placeholder="Contoh: Makan Siang, Tiket Masuk (Tekan Enter)"
-                class="border mt-2 w-full border-green-200 p-2 rounded-md"
+                class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md"
                 bind:value={inputAddOn}
                 onkeydown={handleAddOn}
             >
@@ -148,7 +148,7 @@
                 Deskripsi *
             </label>
             <br>
-            <textarea name="deskripsi" placeholder="Masuk deskrirpsi armada" class="border mt-2 w-full border-green-200 p-2 rounded-md" required>
+            <textarea name="deskripsi" placeholder="Masuk deskrirpsi armada" class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md" required>
                 {form?.values?.deskripsi ?? data.deskripsi ?? ""}
             </textarea>
         </div>

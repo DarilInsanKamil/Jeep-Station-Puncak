@@ -30,11 +30,11 @@
         type="text"
         name="search"
         placeholder="Cari nama customer"
-        class="border border-gray-200 px-2 py-1 rounded-sm"
+        class="border border-green-400 focus:outline-green-600 px-2 py-1 rounded-sm"
       />
-      <Button size="sm">Cari</Button>
+      <Button size="sm" class="bg-green-900 hover:bg-green-800">Cari</Button>
     </form>
-      <Button size="sm" onclick={showCensored}>
+      <Button size="sm" class="bg-green-900 hover:bg-green-800" onclick={showCensored}>
           {#if showSensitive}
             <EyeOff size={20}/>
             Hide Sensitve Data
@@ -48,7 +48,7 @@
   <div class="w-full overflow-hidden rounded-lg border border-gray-200 lg:mt-5 mt-2">
     <div class="overflow-x-auto">
       <table class="w-full text-left text-sm text-gray-500">
-        <thead class="bg-gray-100 text-xs uppercase text-gray-700">
+        <thead class="bg-green-100 text-xs uppercase text-gray-700">
           <tr>
             <th scope="col" class="px-6 py-3 font-medium">No</th>
             <th scope="col" class="px-6 py-3 font-medium">Nama</th>

@@ -8,7 +8,7 @@
 
 <Sidebar.Provider>
   <AppSidebar />
-  <main class="overflow-hidden">
+  <main class="overflow-hidden w-full">
     <Sidebar.Trigger />
     {@render children?.()}
   </main>

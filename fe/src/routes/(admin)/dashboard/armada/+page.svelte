@@ -16,19 +16,19 @@
         type="text"
         name="search"
         placeholder="Cari nama armada"
-        class="border border-gray-200 px-2 py-1 rounded-sm"
+        class="border border-green-400 focus:outline-green-600 px-2 py-1 rounded-sm"
       />
-      <Button size="sm">Cari</Button>
+      <Button size="sm" class="bg-green-900 hover:bg-green-800">Cari</Button>
     </form>
     <a href="/dashboard/armada/create" >
-        <Button><Plus size={20} />Tambah Armada</Button>
+        <Button class="bg-green-900 hover:bg-green-800"><Plus size={20} />Tambah Armada</Button>
     </a>
   </section>
 
   <div class="w-full overflow-hidden rounded-lg border border-gray-200 lg:mt-5 mt-2">
     <div class="overflow-x-auto">
       <table class="w-full text-left text-sm text-gray-500">
-        <thead class="bg-gray-100 text-xs uppercase text-gray-700">
+        <thead class="bg-green-100 text-xs uppercase text-gray-700">
           <tr>
             <th scope="col" class="px-6 py-3 font-medium">No</th>
             <th scope="col" class="px-6 py-3 font-medium">Nama Armada</th>
@@ -40,7 +40,7 @@
           </tr>
         </thead>
 
-        <tbody class="divide-y divide-gray-200 bg-white">
+        <tbody class="divide-y divide-green-200 bg-white">
           {#if data.data && data.data.length > 0}
             {#each data.data as armada, i (armada.id)}
               <tr class="hover:bg-gray-50 transition-colors">

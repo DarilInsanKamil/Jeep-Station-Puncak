@@ -31,8 +31,8 @@
     <BreadCrumb/>
 </div>
 
-<section class="lg:p-10 p-5">
-    <form action="?create" method="POST" class="grid lg:gap-5 gap-3 lg:w-1/2 w-full" enctype="multipart/form-data" use:enhance={() => {
+<section class="lg:p-10 p-5 ">
+    <form action="?create" method="POST" class="grid lg:gap-5 lg:w-1/2 gap-3 w-full" enctype="multipart/form-data" use:enhance={() => {
       return async({result, update}) => {
         if(result.type === 'success') {
           toast.success('Berhasil Menambah data')
@@ -51,7 +51,7 @@
                 type="file"
                 name="gambar_armada"
                 accept="image/*"
-                class="border mt-2 w-full border-black p-2 rounded-md"
+                class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md"
                 onchange={handleImageChange}
                 required
             >
@@ -74,7 +74,7 @@
                 name="nama_armada"
                 value={form?.values?.nama_armada}
                 placeholder="Masukan nama armada"
-                class="border mt-2 w-full border-black p-2 rounded-md"
+                class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md"
                 required
             >
         </div>
@@ -88,7 +88,7 @@
                 name="harga_sewa"
                 value={form?.values?.harga_sewa}
                 placeholder="Masukan harga sewa/hari"
-                class="border mt-2 w-full border-black p-2 rounded-md"
+                class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md"
                 required
             >
         </div>
@@ -102,7 +102,7 @@
                 name="kapasitas"
                 value={form?.values?.kapasitas}
                 placeholder="Masukan jumlah kapasitas"
-                class="border mt-2 w-full border-black p-2 rounded-md"
+                class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md"
                 required
             >
         </div>
@@ -116,7 +116,7 @@
                 name="plat_nomor"
                 value={form?.values?.plat_nomor}
                 placeholder="Masukan nopol armada"
-                class="border mt-2 w-full border-black p-2 rounded-md"
+                class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md"
                 required
             >
         </div>
@@ -125,10 +125,9 @@
                 Deskripsi *
             </label>
             <br>
-            <textarea name="deskripsi" placeholder="Masuk deskrirpsi armada" class="border mt-2 w-full border-black p-2 rounded-md" required>
-                {form?.values?.deskripsi}
+            <textarea name="deskripsi" cols="4" placeholder="Masuk deskrirpsi armada" class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md" required>
             </textarea>
         </div>
-        <Button type='submit'>Upload Data Armada</Button>
+        <Button type='submit' class="bg-green-900 hover:bg-green-800">Upload Data Armada</Button>
     </form>
 </section>
