@@ -12,6 +12,18 @@ export const reservasi = new Elysia({ prefix: '/reservasi' })
             return error.toResponse();
         }
     })
+  .get('/unvail/:armadaId',
+    async ({ params }) => {
+      const armadaId = params.armadaId
+      const response = await ReservasiService.getReservasiByArmadaId(armadaId)
+      return response
+    }, {
+      detail: {
+          summary: 'GET data reservasi by armadaId',
+          tags: ["Reservasi"]
+      }
+    }
+  )
     .post(
         '/create',
         async ({ body }) => {

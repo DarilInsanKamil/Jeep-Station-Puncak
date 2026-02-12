@@ -14,6 +14,7 @@
     let selectedImage = $state(null);
 
     const todayDate = today(getLocalTimeZone());
+
     function openImage(url: any) {
        selectedImage = url;
     }

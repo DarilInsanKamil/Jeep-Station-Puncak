@@ -2,18 +2,42 @@
   import Button from "$lib/components/ui/button/button.svelte";
   import * as Popover from "$lib/components/ui/popover/index.js";
   import RangeCalendar from "$lib/components/ui/range-calendar/range-calendar.svelte";
-  import { DateFormatter, getLocalTimeZone, today } from "@internationalized/date";
+  import { DateFormatter, getLocalTimeZone, parseAbsoluteToLocal, parseDate, today } from "@internationalized/date";
   import { cn } from "$lib/utils";
   import { ArrowRight, CalendarIcon } from "@lucide/svelte";
   import type { DateRange } from "bits-ui";
 
-  let { value = $bindable() } = $props<{
+  let { value = $bindable(), unavailableDates = []} = $props<{
       value: DateRange | undefined;
+      unavailableDates?: { tanggal_mulai: string; tanggal_selesai: string }[] | null;
   }>();
+
+
   let innerWidth = $state(0);
   let isDesktop = $derived(innerWidth > 640);
   const df = new DateFormatter("id-ID", { dateStyle: "medium" });
   const minDate = today(getLocalTimeZone());
+
+
+  function isDateDisabled(date: DateValue) {
+    // Loop semua range dari API
+    return unavailableDates.some((range:any) => {
+      // Konversi String ISO API ke Object DateValue (Local Time)
+      // parseAbsoluteToLocal otomatis handle timezone komputer user
+      const rawStart = new Date(range.tanggal_mulai).toISOString();
+      const rawEnd = new Date(range.tanggal_selesai).toISOString();
+
+      const start = parseAbsoluteToLocal(rawStart);
+      const end = parseAbsoluteToLocal(rawEnd);
+
+      // Bandingkan:
+      // Apakah tanggal kalender (date) >= start DAN <= end?
+      // Kita compare menggunakan .compare() bawaan library
+      // return < 0 (lebih kecil), 0 (sama), > 0 (lebih besar)
+
+      return date.compare(start) >= 0 && date.compare(end) <= 0;
+    });
+  }
 </script>
 
 <svelte:window bind:innerWidth />
@@ -74,9 +98,11 @@
 
     <Popover.Content class="w-auto p-0" align="start">
       <RangeCalendar
-          bind:value minValue={minDate}
+          bind:value
+          minValue={minDate}
           numberOfMonths={isDesktop ? 2 : 1}
-          class="p-2"
+          isDateUnavailable={isDateDisabled}
+          class="[&_[data-unavailable]]:!bg-red-300 [&_[data-unavailable]]:!rounded-md [&_[data-unavailable]]:text-black"
           />
     </Popover.Content>
   </Popover.Root>

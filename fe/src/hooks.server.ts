@@ -6,7 +6,7 @@ export const handle: Handle = async ({ event, resolve }) => {
   event.locals.user = undefined;
 
   const token = event.cookies.get('accessToken');
-  console.log(token)
+
   if (token) {
     try {
       const decoded: any = jwtDecode(token);

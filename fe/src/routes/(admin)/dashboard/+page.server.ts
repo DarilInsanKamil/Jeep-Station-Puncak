@@ -8,7 +8,7 @@ export const load: PageServerLoad = async () => {
     { data: reservasi },
       { data: customer }
     ] = await Promise.all([
-      client.armada.get(),
+      client.armada.get({ query: {limit: 100} }),
       client.bundles.get(),
       client.reservasi.get(),
       client.customer.get()
