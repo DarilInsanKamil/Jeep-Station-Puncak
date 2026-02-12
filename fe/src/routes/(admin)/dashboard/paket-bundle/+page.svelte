@@ -16,19 +16,19 @@
           type="text"
           name="search"
           placeholder="Cari nama bundle"
-          class="border border-gray-200 px-2 py-1 rounded-sm lg:mb-0 mb-3"
+          class="border border-green-400 focus:outline-green-600 px-2 py-1 rounded-sm lg:mb-0 mb-3"
         />
-        <Button size="sm">Cari</Button>
+        <Button size="sm" class="bg-green-900 hover:bg-green-800">Cari</Button>
       </form>
     <a href="/dashboard/paket-bundle/create" >
-        <Button><Plus size={20} />Tambah Bundle</Button>
+        <Button class="bg-green-900 hover:bg-green-800"><Plus size={20} />Tambah Bundle</Button>
     </a>
   </section>
 
   <div class="w-full overflow-hidden rounded-lg border border-gray-200 lg:m-0 mt-2">
     <div class="overflow-x-auto">
       <table class="w-full text-left text-sm text-gray-500">
-        <thead class="bg-gray-100 text-xs uppercase text-gray-700">
+        <thead class="bg-green-100 text-xs uppercase text-gray-700">
           <tr>
             <th scope="col" class="px-6 py-3 font-medium">No</th>
             <th scope="col" class="px-6 py-3 font-medium">Nama Bundle</th>
@@ -79,7 +79,7 @@
                 </td>
                 <td class="flex gap-2 px-6 py-4">
                   <a href={`/dashboard/paket-bundle/edit/${bundle.id}`}>
-                    <Button size="icon-sm" variant="outline">
+                    <Button size="icon-sm" variant="outline" class="hover:bg-green-50">
                       <PencilLine size={20} color="#5b9810" />
                     </Button>
                   </a>

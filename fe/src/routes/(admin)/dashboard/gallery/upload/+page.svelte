@@ -39,7 +39,7 @@
             type="file"
             name="gambar_url"
             accept="image/*"
-            class="border mt-2 w-full border-black p-2 rounded-md"
+            class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md"
             onchange={handleImageChange}
             required
         >
@@ -56,11 +56,11 @@
                 Deskripsi *
             </label>
             <br>
-            <textarea name="deskripsi" placeholder="Masuk deskrirpsi armada" class="border mt-2 w-full border-black p-2 rounded-md" required>
+            <textarea name="deskripsi" placeholder="Masuk deskrirpsi armada" class="border mt-2 w-full border-green-400 focus:outline-green-600 p-2 rounded-md" required>
                 {form?.values?.deskripsi}
             </textarea>
         </div>
-        <Button type='submit'>Upload Data Gallery</Button>
+        <Button type='submit' class="bg-green-900 hover:bg-green-800">Upload Data Gallery</Button>
     </div>
 </form>
 </section>

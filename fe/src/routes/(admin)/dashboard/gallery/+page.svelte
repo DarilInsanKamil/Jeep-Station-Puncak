@@ -12,14 +12,14 @@
 
 <section class="lg:p-10 p-5">
   <a href="/dashboard/gallery/upload">
-  <Button><Plus size={20} />Tambah Data Gambar</Button>
+  <Button class="bg-green-900 hover:bg-green-800"><Plus size={20} />Tambah Data Gambar</Button>
   </a>
 </section>
 
 <section class="lg:px-10 px-5 grid lg:grid-cols-4 grid-cols-2 gap-4">
     {#if data.data && data.data.length > 0}
         {#each data.data as gallery (gallery.id)}
-            <div class="relative border border-green-300 p-3 rounded-md">
+            <div class="relative bg-green-50 shadow-md p-3 rounded-md">
                 <img src={`${PUBLIC_API_URL}${gallery.gambar_url}`} alt={gallery.id}>
                 <p>{gallery.deskripsi}</p>
                 <form
