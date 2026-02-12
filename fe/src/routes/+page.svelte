@@ -6,21 +6,32 @@
     import Lightbox from "$lib/molecules/Lightbox.svelte";
     import type { PageProps } from "./$types";
     import { PUBLIC_API_URL } from '$env/static/public';
+    import DateRangePick from "$lib/molecules/DateRangePick.svelte";
+    import { getLocalTimeZone, today } from "@internationalized/date";
+    import Button from "$lib/components/ui/button/button.svelte";
     let{data}: PageProps = $props()
 
     let selectedImage = $state(null);
 
+    const todayDate = today(getLocalTimeZone());
     function openImage(url: any) {
        selectedImage = url;
     }
-
     function closeImage() {
        selectedImage = null;
     }
+    let searchFilter = $state({
+      start: todayDate,
+      end: todayDate.add({ days: 2 })
+    });
+
 </script>
 
 <section>
-    Hero Section
+        <DateRangePick bind:value={searchFilter}/>
+        <a href={`/armada/tersedia?tanggalMulai=${searchFilter.start}&tanggalSelesai=${searchFilter.end}`}>
+            <Button type='submit' variant="outline">Cari Armada</Button>
+        </a>
 </section>
 
 <section class="lg:p-10 md:p-5 p-5">
@@ -28,7 +39,7 @@
     <div class="grid lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-5 mt-5">
         {#if data.armada && data.armada.length > 0}
             {#each data.armada as armada (armada.id) }
-                <CardListArmada {armada}/>
+                <CardListArmada {armada} href={`/armada/${armada.id}`}/>
             {/each}
         {/if}
     </div>

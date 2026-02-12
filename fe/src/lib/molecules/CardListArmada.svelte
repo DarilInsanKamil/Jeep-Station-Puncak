@@ -3,7 +3,7 @@
     import Button from "$lib/components/ui/button/button.svelte";
     import { UserRound } from "@lucide/svelte";
     import { PUBLIC_API_URL } from '$env/static/public';
-    let{armada} = $props()
+    let{armada, href} = $props()
 </script>
 
 <div class="border bg-white shadow-sm rounded-sm">
@@ -27,7 +27,7 @@
             <p class="text-sm text-gray-600">Mulai dari</p>
             <p class="font-semibold tracking-tight text-xl">{formatRupiah(armada.harga_sewa)}</p>
         </div>
-        <a href={`/armada/${armada.id}`}>
+        <a href={href}>
             <Button class="bg-green-900 hover:bg-green-800" size="sm">Lihat Detail</Button>
         </a>
     </div>

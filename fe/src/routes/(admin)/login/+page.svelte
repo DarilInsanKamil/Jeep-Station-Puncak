@@ -13,7 +13,6 @@
     }
 </script>
 
-
 <section class="w-full h-svh flex justify-center items-center ">
     <form action="?login" method="POST" class="w-1/4" use:enhance = {() => {
       return async({result, update}) => {
