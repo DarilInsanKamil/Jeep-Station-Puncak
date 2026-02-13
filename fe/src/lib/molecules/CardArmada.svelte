@@ -6,7 +6,6 @@
 
 <div>
     <img src={`${Bun.env.BASE_URL}${armada.gambar_armada}`} alt={armada.id}>
-
     <div>
         <h3>{armada.nama_armada}</h3>
         <span>
