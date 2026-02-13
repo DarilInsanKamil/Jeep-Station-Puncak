@@ -18,7 +18,7 @@ export const load: PageServerLoad = async ({url}) => {
 
     return {
       success: true,
-      data: data ?? [],
+      data: data ?? null,
       date: {
         tanggalMulai, tanggalSelesai
       }

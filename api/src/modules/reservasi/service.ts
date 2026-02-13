@@ -147,4 +147,13 @@ export abstract class ReservasiService {
         }
         return result.rows[0]
     }
+
+  static async getReservasiByArmadaId(armadaId: string) {
+    const reservasiQuery = {
+      text: 'select "tanggal_mulai", "tanggal_selesai" from reservasi where "armada_id" = $1',
+      values: [armadaId]
+    }
+    const result = await pool.query(reservasiQuery)
+    return result.rows
+  }
 }
