@@ -17,7 +17,6 @@
         end: data.date.tglSelesai ? parseDate(data.date.tglSelesai) : todayDate.add({ days: 2 })
     });
 
-
     let durationInDays = $derived.by(() => {
         const s = searchFilter.start;
         const e = searchFilter.end;
@@ -25,7 +24,8 @@
         if (!s || !e) return 0;
 
         return Math.abs(e.compare(s)) + 1;
-      });
+    });
+    let totalHarga = $derived(Number(armada?.harga_sewa ?? 0) * durationInDays);
 
 </script>
 
@@ -63,7 +63,12 @@
             <p class="font-semibold tracking-tight text-2xl">Total: {formatRupiah(Number(armada?.harga_sewa) * durationInDays)}</p>
         </div>
 
-        <AccordionCustomer {form}/>
+        <AccordionCustomer {form}
+            armadaId={armada?.id}
+            tglMulai={String(searchFilter.start)}
+            tglSelesai={String(searchFilter.end)}
+            totalHarga={String(totalHarga)}
+        />
     </aside>
 
 </section>
