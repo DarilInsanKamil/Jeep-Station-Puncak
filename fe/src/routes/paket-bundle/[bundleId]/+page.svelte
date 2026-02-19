@@ -65,8 +65,10 @@
             <p class="font-semibold tracking-tight text-2xl">Total: {formatRupiah(Number(bundle?.harga) * durationInDays)}</p>
         </div>
 
-        <AccordionCustomer {form}
-            armadaId={bundle?.id}
+        <AccordionCustomer
+            {form}
+            bundleId={bundle?.id}
+            namaItem={bundle?.title}
             tglMulai={String(searchFilter.start)}
             tglSelesai={String(searchFilter.end)}
             totalHarga={String(totalHarga)}

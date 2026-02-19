@@ -5,7 +5,8 @@ export namespace ReservasiModel {
         reservasi: t.Object({
             tanggal_mulai: t.String({ minLength: 1 }),
             tanggal_selesai: t.String({ minLength: 1 }),
-            armada_id: t.String({ minLength: 1 }),
+            armada_id: t.Optional(t.String()),
+            bundle_id: t.Optional(t.String()),
             total_harga: t.String({ minLength: 1 }),
             metode_pembayaran: t.String({ minLength: 1 }),
             jumlah_unit: t.Numeric()
@@ -29,7 +30,7 @@ export namespace ReservasiModel {
             total_harga: t.Numeric(),
             jumlah_unit: t.Numeric(),
             nama_customer: t.String(),
-            nama_armada: t.String(),
+            nama_armada: t.Union([t.String(), t.Null()]),
             nama_bundle:  t.Union([t.String(), t.Null()]),
             created_at: t.Date(),
             updated_at: t.Date()
