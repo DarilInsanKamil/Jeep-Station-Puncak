@@ -1,7 +1,7 @@
 // place files you want to import through the `$lib` alias in this folder.
 import { type Cookies, redirect } from '@sveltejs/kit';
 import { client } from './api';
-import { jwtDecode } from 'jwt-decode';
+import { NO_WA } from "$env/static/public";
 
 export async function withAuth<T>(
     cookies: Cookies,
@@ -88,3 +88,27 @@ export const formatRupiah = (value: number) => {
 			minimumFractionDigits: 0
 		}).format(value);
 	};
+
+
+export function generateWhatsAppLink(bookingData: {
+    kode_booking: string;
+    nama_lengkap: string;
+    nama_item: string;
+    total_harga: number;
+}) {
+    // Ganti dengan nomor WhatsApp Admin Jeep Station Puncak (pastikan mulai dari 62, tanpa angka 0 di depan)
+
+    // Format Rupiah
+    const formatRp = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(bookingData.total_harga);
+
+    // Template Pesan
+    const text = `Halo Admin Jeep Station Puncak, saya ingin konfirmasi pembayaran reservasi.\n\n`
+        + `*Kode Booking:* ${bookingData.kode_booking}\n`
+        + `*Nama:* ${bookingData.nama_lengkap}\n`
+        + `*Pesanan:* ${bookingData.nama_item}\n`
+        + `*Total Tagihan:* ${formatRp}\n\n`
+        + `Mohon informasikan nomor rekening untuk pembayarannya. Terima kasih.`;
+
+    // Encode URL agar karakter spesial seperti spasi dan enter terbaca di WA
+    return `https://wa.me/${NO_WA}?text=${encodeURIComponent(text)}`;
+}
