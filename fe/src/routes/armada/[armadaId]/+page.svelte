@@ -50,7 +50,8 @@
             <p class="text-sm font-semibold">Sudah di reservasi</p>
         </div>
 
-        <div class="p-2 shadow-md rounded-sm bg-white"> <DateRangePick
+        <div class="p-2 shadow-md rounded-sm bg-white">
+            <DateRangePick
                 bind:value={searchFilter}
                 unavailableDates={data.unvail}
             />
